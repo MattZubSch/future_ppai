@@ -18,4 +18,6 @@ const estado_cancelada = new Estado("Cancelada");
 
 const estado_enCurso = new Estado("En curso");
 
-module.exports = {Estado, estado_iniciada, estado_finalizada, estado_cancelada, estado_enCurso}
+const estados = [estado_iniciada, estado_finalizada, estado_cancelada, estado_enCurso];
+
+export default estados   // Exporto las clases y los objetos para poder usarlos en otros archivos

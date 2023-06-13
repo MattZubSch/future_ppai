@@ -25,7 +25,13 @@ const cliente_7 = new Cliente(Math.floor(Math.random() * 50000000).toString(), "
 
 const cliente_8 = new Cliente(Math.floor(Math.random() * 50000000).toString(), "Marta Silva", (Math.floor(Math.random() * 8999999) + 1000000).toString());
 
+const cliente_9 = new Cliente(Math.floor(Math.random() * 50000000).toString(), "Osvaldo Armiento", (Math.floor(Math.random() * 8999999) + 1000000).toString());
+
+const cliente_10 = new Cliente(Math.floor(Math.random() * 50000000).toString(), "Alejandro Fernandez", (Math.floor(Math.random() * 8999999) + 1000000).toString());
+
+const cliente_11 = new Cliente(Math.floor(Math.random() * 50000000).toString(), "Mariana Peralta", (Math.floor(Math.random() * 8999999) + 1000000).toString());
+
 //array de clientes
-const array_clientes = [cliente_1, cliente_2, cliente_3, cliente_4, cliente_5, cliente_6, cliente_7, cliente_8];
+const array_clientes = [cliente_1, cliente_2, cliente_3, cliente_4, cliente_5, cliente_6, cliente_7, cliente_8, cliente_9, cliente_10, cliente_11];
 
 export default array_clientes;   // Exporto las clases y los objetos para poder usarlos en otros archivos

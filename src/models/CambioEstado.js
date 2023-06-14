@@ -60,6 +60,7 @@ const cambioEstado_8_2 = new CambioEstado("2023-05-07 09:43:01", null, estados[1
 //paquete de estados llamada 8
 const paq_cambioEstado_8 = [cambioEstado_8_1, cambioEstado_8_2];
 
+
 const cambioEstado_9_1 = new CambioEstado("2023-05-18 10:55:59", "2023-05-18 10:57:13", estados[0]);
 const cambioEstado_9_2 = new CambioEstado("2023-05-18 10:57:13", "2023-05-18 11:32:01", estados[3]);
 const cambioEstado_9_3 = new CambioEstado("2023-05-18 11:32:01", null, estados[1]);

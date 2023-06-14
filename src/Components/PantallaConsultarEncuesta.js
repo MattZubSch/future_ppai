@@ -7,7 +7,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 function PantallaConsultarEncuesta() {
     const [listaLlamadas, setListaLlamadas] = useState(false); // [Llamada
    
-    function cargarDatos(){
+    function opcionConsultarEncuesta(){
         return setListaLlamadas(!listaLlamadas)
     }
     
@@ -17,7 +17,7 @@ function PantallaConsultarEncuesta() {
                 <h1>Consultar Llamadas</h1>
             </header>
             <div className="buttonContainer">
-                <button onClick={cargarDatos} className="btn btn-primary p-2 m-5">Mostrar Llamadas</button>
+                <button onClick={opcionConsultarEncuesta} className="btn btn-primary p-2 m-5">Mostrar Llamadas</button>
             </div>
             {listaLlamadas && <table className="table table-striped table-hover">
                     <thead>

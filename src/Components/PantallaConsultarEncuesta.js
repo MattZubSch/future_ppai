@@ -16,7 +16,7 @@ function PantallaConsultarEncuesta() {
 
     useEffect(() => {
         opcionConsultarEncuesta()
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
    
     function habilitarVentana() {
         return setVentana(true)
@@ -91,6 +91,14 @@ function PantallaConsultarEncuesta() {
         )
     }
 
+    function pedirSeleccionFormaVisualizacion(){
+        return (
+            <div className="Btn-container">
+                <button onClick={() => {tomarSeleccionFormaVisualizacion()}} className="btn btn-primary p-2 m-5">Descargar CSV</button>
+            </div>
+        )
+    }
+
     function mostrarDatosLlamadaSeleccionada(){
         let datos = gestor.obtenerDatosLlamadaSeleccionada()
         // console.log("Datos: " + datos.preguntas)
@@ -136,8 +144,17 @@ function PantallaConsultarEncuesta() {
 
                     </tbody>
                 </table>
+                {pedirSeleccionFormaVisualizacion()}
+                {/* <div className="Btn-container">
+                    <button onClick={() => {pedirSeleccionFormaVisualizacion()}} className="btn btn-primary p-2 m-5">Descargar CSV</button>
+                </div> */}
             </div>
         )
+    }
+
+    function tomarSeleccionFormaVisualizacion(){
+        // return tomarSeleccionFormaVisualizacion()
+        return gestor.tomarFormaVisualizacion()
     }
 
     function confirmCancelar() {
@@ -154,6 +171,81 @@ function PantallaConsultarEncuesta() {
     function cancelar(){
         setCancel(true)
     }
+
+    // function crearCSV(table) {
+    //     let csv = '';
+    //     const rows = table.getElementsByTagName('tr');
+      
+    //     for (let i = 0; i < rows.length; i++) {
+    //       const cells = rows[i].getElementsByTagName('td');
+    //       const row = [];
+      
+    //       for (let j = 0; j < cells.length; j++) {
+    //         const cellData = cells[j].innerText.replace(/"/g, '""'); // Reemplaza las comillas dobles por comillas dobles dobles
+    //         row.push('"' + cellData + '"');
+    //       }
+      
+    //       csv += row.join(',') + '\n';
+    //     }
+      
+    //     return csv;
+    // }
+
+    // function tomarSeleccionFormaVisualizacion() {  
+    //   const table = document.createElement('table');
+    //   let datos = gestor.obtenerDatosLlamadaSeleccionada()
+    //   table.innerHTML = `
+    //     <thead>
+    //       <tr>
+    //         <td><strong>Cliente</strong></td>
+    //         <td><strong>Estado Actual</strong></td>
+    //         <td><strong>Duracion</strong></td>
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       <tr>
+    //         <td>${datos.datosLlamada[0]}</td>
+    //         <td>${datos.datosLlamada[1]}</td>
+    //         <td>${datos.datosLlamada[2]}</td>
+    //       </tr>
+    //     </tbody>
+
+    //     <h3>${datos.encuesta}</h3>
+    //             <table className="table table-striped table-hover">
+    //                 <thead>
+    //                     <td>Pregunta 1</td>
+    //                     <td>Pregunta 2</td>
+    //                     <td>Pregunta 3</td>
+    //                 </thead>
+    //                 <tbody>
+    //                     <tr>
+    //                         <td>${datos.preguntas[0]}</td>
+    //                         <td>${datos.preguntas[1]}</td>
+    //                         <td>${datos.preguntas[2]}</td>
+    //                     </tr>
+    //                     <tr>
+    //                         <td>${datos.respuestaCliente[0]}</td>
+    //                         <td>${datos.respuestaCliente[1]}</td>
+    //                         <td>${datos.respuestaCliente[2]}</td>
+    //                     </tr>
+
+    //                 </tbody>
+    //   `;
+      
+    //   const csvData = crearCSV(table);
+      
+    //   const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    //   const link = document.createElement('a');
+    //   const url = URL.createObjectURL(blob);
+      
+    //   link.setAttribute('href', url);
+    //   link.setAttribute('download', 'table.csv');
+    //   link.style.visibility = 'hidden';
+      
+    //   document.body.appendChild(link);
+    //   link.click();
+    //   document.body.removeChild(link);
+    // }
     
     return (
         <div>
@@ -174,7 +266,7 @@ function PantallaConsultarEncuesta() {
                             onChange={(e) => setStartDate(e.target.value)} 
                             />
                         </div>
-                        <input type="submit" value="Consultar" />
+                        <input type="submit" value="Cargar Fecha Inicio" />
                     </form>
                 }
                 {startDateOk &&
@@ -185,7 +277,7 @@ function PantallaConsultarEncuesta() {
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)} />
                     </div>
-                    <input type="submit" value="Consultar" />
+                    <input type="submit" value="Cargar Fecha Fin" />
                 </form>
                 }
             </div>        

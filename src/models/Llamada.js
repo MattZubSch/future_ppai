@@ -2,7 +2,6 @@ import paq_cambioEstado from "./CambioEstado.js";
 import array_clientes from "./Cliente.js";
 import array_paq_rtaCliente from "./RespuestaDeCliente.js";
 import array_encuestas from "./Encuesta.js";
-import { type } from "@testing-library/user-event/dist/type/index.js";
 
 class Llamada{
     constructor(descripcionOperador, detalleAccionRequerida, duracion, encuestaEnviada, observacionAuditor, cliente, cambioEstado, respuestaCliente){

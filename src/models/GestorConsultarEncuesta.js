@@ -48,12 +48,14 @@ class GestorConsultarEncuesta{
         console.log(this.llamadaSeleccionada)
     }
     obtenerDatosLlamadaSeleccionada(){
-        this.llamadaSeleccionada.mostrarDatos();
-        // datosLlamadaSeleccionada.push(this.llamadaSeleccionada.mostrarDatos());
+        let datosLlamada = this.llamadaSeleccionada.mostrarDatos()
         let respuestaCliente = this.llamadaSeleccionada.mostrarRespuestasCliente();
-        let preguntas = this.llamadaSeleccionada.mostrarPreguntas(respuestaCliente);
-        // return datosLlamadaSeleccionada.concat(respuestaCliente, preguntas);
-        return preguntas
+        let punteros = []
+        punteros.push(respuestaCliente)
+        console.log("objeto punteros: " + punteros)
+        let preguntas = this.llamadaSeleccionada.mostrarPreguntas();
+        let encuesta = this.llamadaSeleccionada.mostrarEncuesta();
+        return {datosLlamada, respuestaCliente, preguntas, encuesta};
     }
     
 }

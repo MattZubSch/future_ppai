@@ -9,6 +9,10 @@ class Pregunta{
         return this.pregunta;
     }
     getRtaPosibles(){
+        // let rtaPosibles = [];
+        // this.rtaPosibles.forEach(rtaPosible => {
+        //     rtaPosibles.push(rtaPosible.getDescripcionRta());
+        // })
         return this.rtaPosibles;
     }
 }

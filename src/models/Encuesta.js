@@ -16,16 +16,26 @@ class Encuesta{
         })
         return preguntas;
     }
-    getRespuestasPreguntas(array_respuestas){
-        let respuestas = [];
+    getRespuestasPreguntas(){
+        let preguntas = [];
         this.preguntas.forEach(pregunta => {
-            let rtaPosibles = pregunta.getRtaPosibles()
-            for (let i = 0; i < array_respuestas.length; i++) {
-                let rta = rtaPosibles.indexOf(array_respuestas[i]) 
-                respuestas.push(rta)
-            }
+            preguntas.push(pregunta.getDescripcion())
         })
-        return respuestas;
+        return preguntas
+        // let respuestas = [];
+        // for (let rtaCli in array_respuestas) {
+        //     for (let i = 0; i < array_respuestas[rtaCli].length; i++) {
+        //         this.preguntas.forEach(pregunta => {
+        //             let rtaPosibles = pregunta.getRtaPosibles()
+        //             let rta = rtaPosibles.findIndex(rtaPosibles => rtaPosibles === array_respuestas[rtaCli][i])
+        //             if (!rta === -1){
+        //                 respuestas.push(rtaPosibles[rta])
+        //             }
+        //         }
+        //         )
+        //     }   
+        // }
+        // return respuestas;
     }
 }
 

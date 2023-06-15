@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import array_llamadas from "../models/Llamada.js";
 import gestor from "../models/GestorConsultarEncuesta.js";
 import "./PantallaConsultarEncuesta.css"
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -13,13 +12,14 @@ function PantallaConsultarEncuesta() {
     const [endDate, setEndDate] = useState('');
     const [startDateOk, setStartDateOk] = useState(false);
     const [llamadaSeleccionada, setLlamadaSeleccionada] = useState(false)
+    const [cancel, setCancel] = useState(false)
 
     useEffect(() => {
         opcionConsultarEncuesta()
     }, [])
    
     function habilitarVentana() {
-        return setVentana(!ventana)
+        return setVentana(true)
     }
 
     function pedirPeriodoFecha(){
@@ -65,44 +65,94 @@ function PantallaConsultarEncuesta() {
     }
 
     function mostrarLlamadasConEncuesta(){
+        if (gestor.llamadasEncuesta.length === 0){
+            return (
+                <div>
+                    <h3>No hay llamadas con encuestas en el periodo seleccionado</h3>
+                </div>
+            )
+        }
+        
         return (
             <table className="table table-striped table-hover">
-                    <thead>
-                        <td><strong>Nombre del Cliente</strong></td>
-                        <td><strong>Estado Actual</strong></td>
-                    </thead>
-                    <tbody>
-                        {gestor.llamadasEncuesta.map((llamada, index) => (
-                            <tr key={index} onClick={() => tomarSeleccionLlamada(llamada)}>
-                                <td>{llamada.cliente.getNombre()}</td>
-                                <td>{llamada.encuestaEnviada.getDescripcionEncuesta()}</td>
-                            </tr>))}
-                    </tbody>
-                </table>
+                <thead>
+                    <td><strong>Nombre del Cliente</strong></td>
+                    <td><strong>Estado Actual</strong></td>
+                </thead>
+                <tbody>
+                    {gestor.llamadasEncuesta.map((llamada, index) => (
+                        <tr key={index} onClick={() => tomarSeleccionLlamada(llamada)}>
+                            <td>{llamada.cliente.getNombre()}</td>
+                            <td>{llamada.encuestaEnviada.getDescripcionEncuesta()}</td>
+                        </tr>))}
+                </tbody>
+            </table>       
+        
         )
     }
 
     function mostrarDatosLlamadaSeleccionada(){
-        let datosLlamada = gestor.obtenerDatosLlamadaSeleccionada()
+        let datos = gestor.obtenerDatosLlamadaSeleccionada()
+        // console.log("Datos: " + datos.preguntas)
         return (
-            <table className="table table-striped table-hover">
-                <thead>
-                    <td><strong>Cliente</strong></td>
-                    <td><strong>Estado Actual</strong></td>
-                    <td><strong>Duracion</strong></td>
-                    {/* <td><strong>Respuestas Seleccionadas</strong></td>
-                    <td><strong>Descripcion</strong></td>
-                    <td><strong>Pregunta</strong></td> */}
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{datosLlamada[0]}</td>
-                        <td>{datosLlamada[1]}</td>
-                        <td>{datosLlamada[2]}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div>
+                <table className="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <td><strong>Cliente</strong></td>
+                            <td><strong>Estado Actual</strong></td>
+                            <td><strong>Duracion</strong></td>
+                        </tr>
+                        {/* <td><strong>Respuestas Seleccionadas</strong></td>
+                        <td><strong>Descripcion</strong></td>
+                        <td><strong>Pregunta</strong></td> */}
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{datos.datosLlamada[0]}</td>
+                            <td>{datos.datosLlamada[1]}</td>
+                            <td>{datos.datosLlamada[2]}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>{datos.encuesta}</h3>
+                <table className="table table-striped table-hover">
+                    <thead>
+                        <td>Pregunta 1</td>
+                        <td>Pregunta 2</td>
+                        <td>Pregunta 3</td>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{datos.preguntas[0]}</td>
+                            <td>{datos.preguntas[1]}</td>
+                            <td>{datos.preguntas[2]}</td>
+                        </tr>
+                        <tr>
+                            <td>{datos.respuestaCliente[0]}</td>
+                            <td>{datos.respuestaCliente[1]}</td>
+                            <td>{datos.respuestaCliente[2]}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         )
+    }
+
+    function confirmCancelar() {
+        setVentana(false)
+        setPeriodo(false)
+        setStartDateOk(false)
+        setLlamadaSeleccionada(false)
+        setCancel(false)
+        setStartDate("")
+        setEndDate("")
+        opcionConsultarEncuesta()
+    }
+
+    function cancelar(){
+        setCancel(true)
     }
     
     return (
@@ -146,27 +196,13 @@ function PantallaConsultarEncuesta() {
                 {!llamadaSeleccionada && mostrarLlamadasConEncuesta()}
                 {llamadaSeleccionada && mostrarDatosLlamadaSeleccionada()}
                 </div>}
-
-
-
-            {/* {listaLlamadas && <table className="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nombre Cliente</th>
-                            <th>Duración</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {llamadas.map((llamada, index) => (
-                            <tr key={index}>
-                                <td>{llamada.mostrarDatos()[0]}</td>
-                                <td>{llamada.mostrarDatos()[1]}</td>
-                                <td>{llamada.mostrarDatos()[2]}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>} */}
+            <footer>
+                <div className="Btn-container">
+                    <button onClick={() => {cancelar()}} className="btn btn-primary p-2 m-5">Cancelar</button>
+                    {cancel && 
+                    <button onClick={() => {confirmCancelar()}} className="btn btn-primary p-2 m-5">Confirmar Cancelacion</button>}
+                </div>
+            </footer>
         </div>
     );
 }

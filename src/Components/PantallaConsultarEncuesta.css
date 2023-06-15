@@ -119,3 +119,12 @@ body {
   tbody th {
     background-color: #fff;
   }
+
+  .tituloEncuesta {
+    text-align: center;
+  }
+
+  .encabezadoEncuesta {
+    text-align: center;
+    width: "100%";
+  }

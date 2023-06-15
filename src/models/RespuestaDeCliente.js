@@ -51,7 +51,19 @@ const rtaCliente_6_3 = new RespuestaDeCliente("2023-05-07", array_paq_rtaPos[7][
 //paquete de respuestas del cliente 6
 const paq_rtaCliente_6 = [rtaCliente_6_1, rtaCliente_6_2, rtaCliente_6_3];
 
-export const array_paq_rtaCliente = [paq_rtaCliente_1, paq_rtaCliente_2, paq_rtaCliente_3, paq_rtaCliente_4, paq_rtaCliente_5, paq_rtaCliente_6];
+const rtaCliente_7_1 = new RespuestaDeCliente("2023-05-18", array_paq_rtaPos[7][0]);
+const rtaCliente_7_2 = new RespuestaDeCliente("2023-05-18", array_paq_rtaPos[7][1]);
+const rtaCliente_7_3 = new RespuestaDeCliente("2023-05-18", array_paq_rtaPos[6][7]);
+//paquete de respuestas del cliente 7
+const paq_rtaCliente_7 = [rtaCliente_7_1, rtaCliente_7_2, rtaCliente_7_3];
+
+const rtaCliente_8_1 = new RespuestaDeCliente("2023-06-05", array_paq_rtaPos[7][1]);
+const rtaCliente_8_2 = new RespuestaDeCliente("2023-06-05", array_paq_rtaPos[3][4]);
+
+//paquete de respuestas del cliente 8
+const paq_rtaCliente_8 = [rtaCliente_8_1, rtaCliente_8_2];
+
+export const array_paq_rtaCliente = [paq_rtaCliente_1, paq_rtaCliente_2, paq_rtaCliente_3, paq_rtaCliente_4, paq_rtaCliente_5, paq_rtaCliente_6, paq_rtaCliente_7, paq_rtaCliente_8];
 
 
 

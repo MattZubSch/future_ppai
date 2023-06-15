@@ -1,5 +1,5 @@
 import './App.css';
-import PantallaConsultarEncuesta from './Components/PantallaConsultarEncuesta';
+import PantallaConsultarEncuesta from './Components/PantallaConsultarEncuesta.js';
 
 function App() {
   return (

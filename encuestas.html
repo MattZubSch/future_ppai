@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Respuesta de Voz Interactiva</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      span {
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      b {
+        font-weight: bold;
+      }
+
+      form {
+        gap: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      form .fecha {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      label {
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      input[type="date"] {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 4px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      table {
+        margin-top: 30px;
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 800px;
+        background-color: white;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      .back-button {
+        text-decoration: none;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #4caf50;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .back-button:hover {
+        background-color: #45a049;
+      }
+
+      tbody th {
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="http://127.0.0.1:8000/" class="back-button">Volver al inicio</a>
+    <span>Página de <b>Consultar encuesta</b></span>
+    <form>
+      <div class="fecha">
+        <label for="start-date">Fecha de inicio:</label>
+        <input type="date" id="start-date" name="start-date" />
+      </div>
+      <div class="fecha">
+        <label for="end-date">Fecha fin:</label>
+        <input type="date" id="end-date" name="end-date" />
+      </div>
+
+      <input type="submit" value="Consultar" />
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Duración llamada</th>
+          <th>Columna 2</th>
+          <th>Columna 3</th>
+          <th>Columna 4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Juan Gómez</th>
+          <th>00:04:23</th>
+          <th></th>
+          <th></th>
+          <th>
+            <input class="submit-2" type="submit" value="Seleccionar" id="" />
+          </th>
+        </tr>
+        <tr>
+          <th>Miriam Velez</th>
+          <th>00:12:27</th>
+          <th></th>
+          <th></th>
+          <th>
+            <input class="submit-2" type="submit" value="Seleccionar" id="" />
+          </th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>
+            <input class="submit-2" type="submit" value="Seleccionar" id="" />
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

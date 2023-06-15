@@ -9,6 +9,24 @@ class Encuesta{
     getDescripcionEncuesta(){
         return this.descripcion;
     }
+    getDescripcionPreguntas(){
+        let preguntas = [];
+        this.preguntas.forEach(pregunta => {
+            preguntas.push(pregunta.getDescripcion())
+        })
+        return preguntas;
+    }
+    getRespuestasPreguntas(array_respuestas){
+        let respuestas = [];
+        this.preguntas.forEach(pregunta => {
+            let rtaPosibles = pregunta.getRtaPosibles()
+            for (let i = 0; i < array_respuestas.length; i++) {
+                let rta = rtaPosibles.indexOf(array_respuestas[i]) 
+                respuestas.push(rta)
+            }
+        })
+        return respuestas;
+    }
 }
 
 //pregunta 18: ¿Recomendaría este servicio de atención al cliente a otros? (Siendo 1=Si y 2=No)

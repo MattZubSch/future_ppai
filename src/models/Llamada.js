@@ -15,20 +15,65 @@ class Llamada{
         this.respuestaCliente = respuestaCliente;
     }
     esDePeriodo(fechaInicio, fechaFin){
-        return this.cambioEstado[0].fechaHoraInicio >= fechaInicio && this.cambioEstado[this.cambioEstado.length-1].fechaHoraInicio <= fechaFin;
+        // console.log("entra en esDePeriodo")
+        let fechaHoraInicio = "0"
+        this.cambioEstado.forEach(cambioEstado => {
+            if (cambioEstado.getFechaHoraInicio() < fechaHoraInicio || fechaHoraInicio === "0"){
+                fechaHoraInicio = cambioEstado.getFechaHoraInicio();
+                }   
+            })
+        
+        if (fechaHoraInicio >= fechaInicio && fechaHoraInicio <= fechaFin){
+            return true;
+        }
     }
     esFinalizada(){
-        return this.cambioEstado[this.cambioEstado.length-1].estado.esFinalizado();
+        let resultado = false;
+        this.cambioEstado.forEach(cambioEstado => {
+            // console.log("resultado es ultimo estado: " + cambioEstado.esUltimoEstado())
+            if (cambioEstado.esUltimoEstado()){
+                // console.log("resultado es finalizado: " + cambioEstado.estado.esFinalizada())
+                if (cambioEstado.estado.esFinalizada()){
+                    // console.log("entro a esFinalizada")
+                    resultado = true;
+                };
+            }})
+        return resultado;
     }
     esEncuestaRespondida(){
-        return this.encuestaEnviada == true;
+        let resultado = false;
+        if (this.encuestaEnviada === null){
+                resultado = false;
+        } else {
+            // console.log("cae directo aca")
+            resultado = true;
+        }
+        return resultado;
     }
     getDuracion(){
         return this.duracion;
     } 
     mostrarDatos() {
-        return
-    }   
+        console.log("entra?")
+        let estado = null
+        let duracion = this.getDuracion();
+        let cliente = this.cliente.getNombre();
+        this.cambioEstado.forEach(cambioEstado => {
+            if (cambioEstado.esEstadoActual()){
+                estado = cambioEstado.estado.getNombre();
+            }})
+        return [cliente, estado, duracion];
+    }
+    mostrarRespuestasCliente(){
+        let respuestas = [];
+        this.respuestaCliente.forEach(respuestaCliente => {
+            respuestas.push(respuestaCliente.getRespuestaDeCliente());
+        })
+        return respuestas;
+    }
+    mostrarPreguntas(arrayRta){
+        return this.encuestaEnviada.getRespuestasPreguntas(arrayRta);
+    }
 
 }
 
@@ -68,4 +113,4 @@ const llamada_11 = new Llamada("IVR", null, "00:04:27", null, null, array_client
 //array de todas las llamadas
 const array_llamadas = [llamada_1, llamada_2, llamada_3, llamada_4, llamada_5, llamada_6, llamada_7, llamada_8, llamada_9, llamada_10, llamada_11];
 
-console.log(llamada_6)
+export default array_llamadas;

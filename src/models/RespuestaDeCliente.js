@@ -11,6 +11,9 @@ class RespuestaDeCliente{
     validarFechaEncuesta(fechaInicio, fechaFin){
         return this.fechaEncuesta >= fechaInicio && this.fechaEncuesta <= fechaFin;
     }
+    getRespuestaDeCliente(){
+        return this.respuesta.getDescripcionRta();
+    }
 }
 
 

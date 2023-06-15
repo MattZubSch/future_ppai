@@ -8,6 +8,9 @@ class Pregunta{
     getDescripcion(){
         return this.pregunta;
     }
+    getRtaPosibles(){
+        return this.rtaPosibles;
+    }
 }
 
 const pregunta_1 = new Pregunta("¿Qué tan fácil fue navegar por el sistema de atención al cliente? (Siendo 1=Muy Dificil y 10=Muy Facil)", array_paq_rtaPos[0]);

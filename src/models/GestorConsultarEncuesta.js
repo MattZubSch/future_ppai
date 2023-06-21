@@ -10,6 +10,9 @@ class GestorConsultarEncuesta{
         this.llamadaSeleccionada = llamadaSeleccionada;
     }
     nuevaConsultaEncuesta(){
+        if (!this.fechaInicio === null || !this.fechaFin === null) {
+            return window.confirm("¿Desea reiniciar la busqueda de Encuestas?")    
+        }
         return true
     }
     tomarPeriodoFecha(fechaInicio, fechaFin){

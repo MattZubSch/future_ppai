@@ -20,7 +20,6 @@ class GestorConsultarEncuesta{
         this.llamadasEncuesta = [];
         array_llamadas.forEach(llamada => {
             if (llamada.esDePeriodo(this.fechaInicio, this.fechaFin)){
-                // console.log("resultado de esFinalizada: " + llamada.esFinalizada())
                 if (llamada.esFinalizada()) {
                     if (llamada.esEncuestaRespondida()){
                     this.llamadasEncuesta.push(llamada);
@@ -54,9 +53,6 @@ class GestorConsultarEncuesta{
     obtenerDatosLlamadaSeleccionada(){
         let datosLlamada = this.llamadaSeleccionada.mostrarDatos()
         let respuestaCliente = this.llamadaSeleccionada.mostrarRespuestasCliente();
-        let punteros = []
-        punteros.push(respuestaCliente)
-        console.log("objeto punteros: " + punteros)
         let preguntas = this.llamadaSeleccionada.mostrarPreguntas();
         let encuesta = this.llamadaSeleccionada.mostrarEncuesta();
         return {datosLlamada, respuestaCliente, preguntas, encuesta};

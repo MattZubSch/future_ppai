@@ -40,20 +40,12 @@ class Llamada{
         return resultado;
     }
     esEncuestaRespondida(){
-        let resultado = false;
-        if (this.encuestaEnviada === null){
-                resultado = false;
-        } else {
-            // console.log("cae directo aca")
-            resultado = true;
-        }
-        return resultado;
+        return this.encuestaEnviada
     }
     getDuracion(){
         return this.duracion;
     } 
     mostrarDatos() {
-        // console.log("entra?")
         let estado = null
         let duracion = this.getDuracion();
         let cliente = this.cliente.getNombre();
@@ -61,7 +53,8 @@ class Llamada{
             if (cambioEstado.esEstadoActual()){
                 estado = cambioEstado.estado.getNombre();
             }})
-        return [cliente, estado, duracion];
+        let datosLlamada = {cliente: cliente, estado: estado, duracion: duracion};
+        return datosLlamada;
     }
     mostrarRespuestasCliente(){
         let respuestas = [];
@@ -73,14 +66,12 @@ class Llamada{
     mostrarPreguntas(){
         return this.encuestaEnviada.getRespuestasPreguntas();
     }
-    mostrarEncuesta(){
-        return this.encuestaEnviada.getDescripcionEncuesta();
-    }
+    
 
 }
 
 //estado inicial -> finalizado. Encuesta de Satisfaccion
-const llamada_1 = new Llamada("IVR", null, "00:05:18", true, null, array_clientes[0], paq_cambioEstado[0], array_paq_rtaCliente);
+const llamada_1 = new Llamada("IVR", null, "00:05:18", true, null, array_clientes[0], paq_cambioEstado[0], array_paq_rtaCliente[0]);
 // llamada_1.respuestaCliente.concat(array_paq_rtaCliente[0]);
 
 //estado inicial -> finalizado. Encuesta de calidad
@@ -121,12 +112,10 @@ const llamada_10 = new Llamada("IVR", null, "00:02:49", true, null, array_client
 //inicial -> cancelada
 const llamada_11 = new Llamada("IVR", null, "00:04:27", false, null, array_clientes[10], paq_cambioEstado[10], null);
 
+
 //array de todas las llamadas
 const array_llamadas = [llamada_1, llamada_2, llamada_3, llamada_4, llamada_5, llamada_6, llamada_7, llamada_8, llamada_9, llamada_10, llamada_11];
 
-// let res = llamada_6.mostrarRespuestasCliente();
-// console.log(res)
-// console.log(typeof res)
 
 
 export default array_llamadas;

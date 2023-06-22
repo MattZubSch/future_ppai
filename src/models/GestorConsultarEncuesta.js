@@ -1,4 +1,5 @@
 import array_llamadas from "./Llamada.js";
+import array_encuestas from "./Encuesta.js";
 
 class GestorConsultarEncuesta{
     constructor(fecha, fechaInicio, fechaFin, csv, llamadasEncuesta, llamadaSeleccionada){
@@ -10,9 +11,6 @@ class GestorConsultarEncuesta{
         this.llamadaSeleccionada = llamadaSeleccionada;
     }
     nuevaConsultaEncuesta(){
-        if (!this.fechaInicio === null || !this.fechaFin === null) {
-            return window.confirm("¿Desea reiniciar la busqueda de Encuestas?")    
-        }
         return true
     }
     tomarPeriodoFecha(fechaInicio, fechaFin){
@@ -47,63 +45,91 @@ class GestorConsultarEncuesta{
     }
     tomarSeleccionLlamada(llamadaSeleccionada){
         this.llamadaSeleccionada = llamadaSeleccionada;
-        console.log(this.llamadaSeleccionada)
     }
-    //logica para llegar a la respuesta prosible: 
-    //en un loop de respuestas, ir desde la llamada hasta las respuetsas del cliente, y mientras haya respuestas, obtener a la respuesta posible. Guardarlas en un array
-    //luego, hacer otro loop de preguntas, que vaya desde el gestor hacia encuestas, y por cada pregunta, comparar con el array de respuestas posibles, y si coinciden, guardarlas en un array.
-    //es necesario que se modifiquen las respuestas posibles, para que todas las preguntas sean diferentes entre si, y no haya coincidencias. Ademas, borrar de la llamada el atributo de encuestaAsociada, y volverlo un booleano.
     obtenerDatosLlamadaSeleccionada(){
-        let datosLlamada = this.llamadaSeleccionada.mostrarDatos()
-        let respuestaCliente = this.llamadaSeleccionada.mostrarRespuestasCliente();
-        let preguntas = this.llamadaSeleccionada.mostrarPreguntas();
-        let encuesta = this.llamadaSeleccionada.mostrarEncuesta();
-        return {datosLlamada, respuestaCliente, preguntas, encuesta};
+        //buscar array con respuestas de cliente
+        let respuestasCliente = this.llamadaSeleccionada.mostrarRespuestasCliente();
+        //defino el objeto que devolvera toda la informacion de la llamada seleccionada
+        let datosLlamadaSelec = {}
+        //defino array que guarde las preguntas filtradas
+        let preguntas = [];
+        let respuestas = [];
+        //busco por cada encuesta sus preguntas asociadas
+        //aqui inicio el segundo loop
+        array_encuestas.forEach(encuesta => {
+            let preguntasEncuesta = encuesta.getPreguntas();
+            //valido que el array preguntas tenga la misma cantidad de elementos que el array de respuestas
+            if (preguntasEncuesta.length === respuestasCliente.length){
+                //recorro cada pregunta obteniendo sus respuestas posibles
+                preguntasEncuesta.forEach(pregunta => {
+                    //guardar las respuestas posibles de cada pregunta
+                    let respuestasPosibles = pregunta.getRtaPosibles();
+                    //compararar que existan respuestas posibles
+                    for (let i = 0; i < respuestasPosibles.length; i++) {
+                        //si la respuesta posible coincide con la respuesta del cliente, guardar la pregunta en el array
+                        if (respuestasCliente.indexOf(respuestasPosibles[i]) !== -1){
+                            preguntas.push(pregunta)
+                            if (respuestas.indexOf(respuestasPosibles[i]) === -1){
+                                respuestas.push(respuestasPosibles[i])
+                            }
+                            
+                        }
+                    }
+                })
+            }
+            //validar que el array de preguntas obtenidas tenga la misma cantidad de elementos que el array de preguntas de la Encuesta. Si es asi, se encontro la encuesta. Mismo con las respuestas
+            if (preguntas.length === preguntasEncuesta.length && respuestas.length === respuestasCliente.length){
+                //si se encontro la encuesta, guardarla en una variable
+                let descEncuesta = encuesta.getDescripcionEncuesta();
+                let descPreguntas = preguntas.map(pregunta => pregunta.getDescripcion())
+                //defino el objeto que contendra los datos de la llamada, la encuesta, las preguntas y las respuestas
+                let llamada = this.llamadaSeleccionada.mostrarDatos();
+                datosLlamadaSelec = {datosLlamada: llamada, encuesta: descEncuesta, preguntas: descPreguntas, respuestaCliente: respuestas}
+                // console.log(datosLlamadaSelec)
+                return datosLlamadaSelec
+            }
+        })  
+        return datosLlamadaSelec
     }
     tomarFormaVisualizacion(){
         const table = document.createElement('table');
         let datos = this.obtenerDatosLlamadaSeleccionada()
         table.innerHTML = `
-          <thead>
             <tr>
-              <td><strong>Cliente</strong></td>
-              <td><strong>Estado Actual</strong></td>
-              <td><strong>Duracion</strong></td>
+              <td>Cliente</td>
+              <td>Estado Actual</td>
+              <td>Duracion</td>
             </tr>
-          </thead>
-          <tbody>
             <tr>
-              <td>${datos.datosLlamada[0]}</td>
-              <td>${datos.datosLlamada[1]}</td>
-              <td>${datos.datosLlamada[2]}</td>
+              <td>${datos.datosLlamada.cliente}</td>
+              <td>${datos.datosLlamada.estado}</td>
+              <td>${datos.datosLlamada.duracion}</td>
             </tr>
-          </tbody>
-            <table>
-                <thead>
-                    <tr>
-                        <td>${datos.encuesta}</td>
-                    </tr>
-                </thead>
-            </table>
-            <table className="table table-striped table-hover">
-                <thead>
-                    <td>Pregunta 1</td>
-                    <td>Pregunta 2</td>
-                    <td>Pregunta 3</td>
-                </thead>
-                    <tbody>
-                          <tr>
-                              <td>${datos.preguntas[0]}</td>
-                              <td>${datos.preguntas[1]}</td>
-                              <td>${datos.preguntas[2]}</td>
-                          </tr>
-                          <tr>
-                              <td>${datos.respuestaCliente[0]}</td>
-                              <td>${datos.respuestaCliente[1]}</td>
-                              <td>${datos.respuestaCliente[2]}</td>
-                          </tr>
+            <tr></tr>
+            <tr>
+                <td>Descripcion Encuesta</td>
+            </tr>
+            <tr>
+                <td>${datos.encuesta}</td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>Pregunta 1</td>
+                <td>Pregunta 2</td>
+                <td>Pregunta 3</td>
+            </tr>
+            <tr>
+                <td>${datos.preguntas[0]}</td>
+                <td>${datos.preguntas[1]}</td>
+                <td>${datos.preguntas[2]}</td>
+            </tr>
+            <tr>
+                <td>${datos.respuestaCliente[0]}</td>
+                <td>${datos.respuestaCliente[1]}</td>
+                <td>${datos.respuestaCliente[2]}</td>
+            </tr>
   
-                      </tbody>
+                      
         `;
         
         const csvData = this.crearCSV(table);
@@ -121,7 +147,7 @@ class GestorConsultarEncuesta{
         document.body.removeChild(link);
     }
     crearCSV(table) {
-        let csv = '';
+        let csv = '\uFEFF';
         const rows = table.getElementsByTagName('tr');
       
         for (let i = 0; i < rows.length; i++) {
@@ -133,12 +159,11 @@ class GestorConsultarEncuesta{
             row.push('"' + cellData + '"');
           }
       
-          csv += row.join(',') + '\n';
+          csv += row.join(';') + '\n';
         }
       
         return csv;
     }
-    
 }
 
 const gestor = new GestorConsultarEncuesta(null, null, null, null, null, null);

@@ -9,33 +9,14 @@ class Encuesta{
     getDescripcionEncuesta(){
         return this.descripcion;
     }
-    getDescripcionPreguntas(){
-        let preguntas = [];
-        this.preguntas.forEach(pregunta => {
-            preguntas.push(pregunta.getDescripcion())
-        })
-        return preguntas;
+    getPreguntas(){
+        return this.preguntas;
     }
-    getRespuestasPreguntas(){
-        let preguntas = [];
-        this.preguntas.forEach(pregunta => {
-            preguntas.push(pregunta.getDescripcion())
-        })
-        return preguntas
-        // let respuestas = [];
-        // for (let rtaCli in array_respuestas) {
-        //     for (let i = 0; i < array_respuestas[rtaCli].length; i++) {
-        //         this.preguntas.forEach(pregunta => {
-        //             let rtaPosibles = pregunta.getRtaPosibles()
-        //             let rta = rtaPosibles.findIndex(rtaPosibles => rtaPosibles === array_respuestas[rtaCli][i])
-        //             if (!rta === -1){
-        //                 respuestas.push(rtaPosibles[rta])
-        //             }
-        //         }
-        //         )
-        //     }   
-        // }
-        // return respuestas;
+    getDescripcionPreguntas(){
+        // let preguntas = [];
+        // this.preguntas.forEach(pregunta => {
+        //     preguntas.push(pregunta.getDescripcion())
+        // })
     }
 }
 
@@ -84,7 +65,6 @@ encuesta_7.preguntas.push(array_preguntas[7], array_preguntas[11], array_pregunt
 const encuesta_8 = new Encuesta("Encuesta de atención del operario", "2023-12-31 09:00:00");
 encuesta_8.preguntas.push(array_preguntas[8], array_preguntas[3]);
 
-console.log(encuesta_8)
 
 const array_encuestas = [encuesta_1, encuesta_2, encuesta_3, encuesta_4, encuesta_5, encuesta_6, encuesta_7, encuesta_8];
 

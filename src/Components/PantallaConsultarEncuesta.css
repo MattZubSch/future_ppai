@@ -63,7 +63,7 @@ body {
     border-radius: 4px;
   }
 
-  input[type="submit"] {
+  /* input[type="submit"] {
     background-color: #4caf50;
     color: white;
     padding: 12px 24px;
@@ -76,7 +76,7 @@ body {
 
   input[type="submit"]:hover {
     background-color: #45a049;
-  }
+  } */
 
   table {
     margin-top: 30px;
@@ -127,4 +127,24 @@ body {
   .encabezadoEncuesta {
     text-align: center;
     width: "100%";
+  }
+
+  .date-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .main-container {
+    min-height: calc(100% - 100px);
+  }
+
+  .footer {
+    color: white;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    bottom: 0;
   }

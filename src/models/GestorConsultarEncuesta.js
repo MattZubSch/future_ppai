@@ -57,40 +57,59 @@ class GestorConsultarEncuesta{
         //busco por cada encuesta sus preguntas asociadas
         //aqui inicio el segundo loop
         array_encuestas.forEach(encuesta => {
-            let preguntasEncuesta = encuesta.getPreguntas();
-            //valido que el array preguntas tenga la misma cantidad de elementos que el array de respuestas
-            if (preguntasEncuesta.length === respuestasCliente.length){
-                //recorro cada pregunta obteniendo sus respuestas posibles
-                preguntasEncuesta.forEach(pregunta => {
-                    //guardar las respuestas posibles de cada pregunta
-                    let respuestasPosibles = pregunta.getRtaPosibles();
-                    //compararar que existan respuestas posibles
-                    for (let i = 0; i < respuestasPosibles.length; i++) {
-                        //si la respuesta posible coincide con la respuesta del cliente, guardar la pregunta en el array
-                        if (respuestasCliente.indexOf(respuestasPosibles[i]) !== -1){
-                            preguntas.push(pregunta)
-                            if (respuestas.indexOf(respuestasPosibles[i]) === -1){
-                                respuestas.push(respuestasPosibles[i])
-                            }
+            for (let i = 0; i < respuestasCliente.length; i++) {
+                let rtaCliente = encuesta.esRespuestaPosible(respuestasCliente[i])
+                if (rtaCliente !== false){
+                    preguntas.push(rtaCliente.pregunta)
+                    respuestas.push(rtaCliente.respuesta)
+                } else {
+                    break;
+                }
+            }
+        //validar que el array de preguntas obtenidas tenga la misma cantidad de elementos que el array de preguntas de la Encuesta. Si es asi, se encontro la encuesta. Mismo con las respuestas
+        if (respuestas.length === respuestasCliente.length){
+            //si se encontro la encuesta, guardarla en una variable
+            let descEncuesta = encuesta.getDescripcionEncuesta();
+            let descPreguntas = preguntas.map(pregunta => pregunta.getDescripcion())
+            //defino el objeto que contendra los datos de la llamada, la encuesta, las preguntas y las respuestas
+            let llamada = this.llamadaSeleccionada.mostrarDatos();
+            datosLlamadaSelec = {datosLlamada: llamada, encuesta: descEncuesta, preguntas: descPreguntas, respuestaCliente: respuestas}
+        }
+        })
+    return datosLlamadaSelec
+}
+            // let preguntasEncuesta = encuesta.getPreguntas();
+            // //valido que el array preguntas tenga la misma cantidad de elementos que el array de respuestas
+            // if (preguntasEncuesta.length === respuestasCliente.length){
+            //     //recorro cada pregunta obteniendo sus respuestas posibles
+            //     preguntasEncuesta.forEach(pregunta => {
+            //         //guardar las respuestas posibles de cada pregunta
+            //         let respuestasPosibles = pregunta.getRtaPosibles();
+            //         //compararar que existan respuestas posibles
+            //         for (let i = 0; i < respuestasPosibles.length; i++) {
+            //             //si la respuesta posible coincide con la respuesta del cliente, guardar la pregunta en el array
+            //             if (respuestasCliente.indexOf(respuestasPosibles[i]) !== -1){
+            //                 preguntas.push(pregunta)
+            //                 if (respuestas.indexOf(respuestasPosibles[i]) === -1){
+            //                     respuestas.push(respuestasPosibles[i])
+            //                 }
                             
-                        }
-                    }
-                })
-            }
-            //validar que el array de preguntas obtenidas tenga la misma cantidad de elementos que el array de preguntas de la Encuesta. Si es asi, se encontro la encuesta. Mismo con las respuestas
-            if (preguntas.length === preguntasEncuesta.length && respuestas.length === respuestasCliente.length){
-                //si se encontro la encuesta, guardarla en una variable
-                let descEncuesta = encuesta.getDescripcionEncuesta();
-                let descPreguntas = preguntas.map(pregunta => pregunta.getDescripcion())
-                //defino el objeto que contendra los datos de la llamada, la encuesta, las preguntas y las respuestas
-                let llamada = this.llamadaSeleccionada.mostrarDatos();
-                datosLlamadaSelec = {datosLlamada: llamada, encuesta: descEncuesta, preguntas: descPreguntas, respuestaCliente: respuestas}
-                // console.log(datosLlamadaSelec)
-                return datosLlamadaSelec
-            }
-        })  
-        return datosLlamadaSelec
-    }
+            //             }
+            //         }
+            //     })
+            // }
+            // //validar que el array de preguntas obtenidas tenga la misma cantidad de elementos que el array de preguntas de la Encuesta. Si es asi, se encontro la encuesta. Mismo con las respuestas
+            // if (preguntas.length === preguntasEncuesta.length && respuestas.length === respuestasCliente.length){
+            //     //si se encontro la encuesta, guardarla en una variable
+            //     let descEncuesta = encuesta.getDescripcionEncuesta();
+            //     let descPreguntas = preguntas.map(pregunta => pregunta.getDescripcion())
+            //     //defino el objeto que contendra los datos de la llamada, la encuesta, las preguntas y las respuestas
+            //     let llamada = this.llamadaSeleccionada.mostrarDatos();
+            //     datosLlamadaSelec = {datosLlamada: llamada, encuesta: descEncuesta, preguntas: descPreguntas, respuestaCliente: respuestas}
+            //     // console.log(datosLlamadaSelec)
+            //     return datosLlamadaSelec
+            // }
+         
     tomarFormaVisualizacion(){
         const table = document.createElement('table');
         let datos = this.obtenerDatosLlamadaSeleccionada()

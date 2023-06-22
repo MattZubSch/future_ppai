@@ -12,11 +12,15 @@ class Encuesta{
     getPreguntas(){
         return this.preguntas;
     }
-    getDescripcionPreguntas(){
-        // let preguntas = [];
-        // this.preguntas.forEach(pregunta => {
-        //     preguntas.push(pregunta.getDescripcion())
-        // })
+    esRespuestaPosible(respuesta){
+        let rtaPosible = false;
+        this.preguntas.forEach(pregunta => {
+            let respuestasPosibles = pregunta.getRtaPosibles()
+            if (respuestasPosibles.indexOf(respuesta) !== -1){
+                rtaPosible = {pregunta: pregunta, respuesta: respuesta}
+            }
+        })
+        return rtaPosible
     }
 }
 

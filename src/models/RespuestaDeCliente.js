@@ -43,7 +43,7 @@ const rtaCliente_5_2 = new RespuestaDeCliente("2023-04-25", array_paq_rtaPos[5][
 const paq_rtaCliente_5 = [rtaCliente_5_1, rtaCliente_5_2];
 
 const rtaCliente_6_1 = new RespuestaDeCliente("2023-05-07", array_paq_rtaPos[0][1][0]);// Si, fue facil
-const rtaCliente_6_2 = new RespuestaDeCliente("2023-05-07", array_paq_rtaPos[5][1][0]);// Si, fue util
+const rtaCliente_6_2 = new RespuestaDeCliente("2023-05-07", array_paq_rtaPos[2][1][0]);// Si, fue util
 const rtaCliente_6_3 = new RespuestaDeCliente("2023-05-07", array_paq_rtaPos[6][0][3]);// respuesta Si
 //paquete de respuestas del cliente 6
 const paq_rtaCliente_6 = [rtaCliente_6_1, rtaCliente_6_2, rtaCliente_6_3];

@@ -50,7 +50,7 @@ function PantallaConsultarEncuesta() {
     function pedirPeriodoFecha(){
         return (
             <div className="d-flex flex-row m-1 justify-content-around">
-                <div className="d-flex flex-column align-items-center">
+                <div className="d-flex flex-column align-items-start">
                     <form onSubmit={tomarFechaInicio}>
                         <div className="fecha">
                             <label for="start-date">Fecha de inicio:</label>
@@ -66,7 +66,7 @@ function PantallaConsultarEncuesta() {
                     <h6 className="p-2">Fecha Inicio: {startDate}</h6>
                 </div>
                 {startDateOk &&
-                <div className="d-flex flex-column align-items-center">
+                <div className="d-flex flex-column align-items-end">
                     <form onSubmit={tomarFechaFin}>
                         <div className="fecha">
                             <label for="end-date">Fecha fin:</label>

@@ -18,6 +18,9 @@ class CambioEstado{
     esEstadoActual(){
         return this.fechaHoraFin === null;
     }
+    getNombreEstado(){
+        return this.estado.getNombre();
+    }
 }
 
 const cambioEstado_1_1 = new CambioEstado("2023-03-29 15:42:23", "2023-03-29 15:48:41", estados[0]);

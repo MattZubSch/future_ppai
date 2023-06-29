@@ -5,9 +5,6 @@ class RespuestaDeCliente{
         this.fechaEncuesta = fechaEncuesta;
         this.respuesta = respuesta;
     }
-    // getDescripcionRta(){
-    //     return this.respuesta.getDescripcionRta();
-    // }
     getRespuestaDeCliente(){
         return this.respuesta.getDescripcionRta();
     }
@@ -53,6 +50,7 @@ const rtaCliente_7_2 = new RespuestaDeCliente("2023-05-18", array_paq_rtaPos[5][
 const rtaCliente_7_3 = new RespuestaDeCliente("2023-05-18", array_paq_rtaPos[2][0][2]); //Ligeramente útil
 //paquete de respuestas del cliente 7
 const paq_rtaCliente_7 = [rtaCliente_7_1, rtaCliente_7_2, rtaCliente_7_3];
+
 
 const rtaCliente_8_1 = new RespuestaDeCliente("2023-06-05", array_paq_rtaPos[4][0][9]); //Muy amable
 const rtaCliente_8_2 = new RespuestaDeCliente("2023-06-05", array_paq_rtaPos[1][1][0]); //Si, fue rapido

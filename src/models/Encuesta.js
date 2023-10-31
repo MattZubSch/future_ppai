@@ -24,6 +24,34 @@ class Encuesta{
     }
 }
 
+const array_encuestas = [];
+
+const descEncuestas = ["Encuesta de satisfacción", "Encuesta de calidad del servicio", "Encuesta de atención del operario"];
+const fechaFinVigencia = "2023-12-31 09:00:00";
+
+const crearEncuesta = (descEncuestas, fechaFinVigencia) => {
+
+// for (let i = 0; i < cantPreguntas; i++) {
+    let encuesta = new Encuesta(descEncuestas[Math.floor(Math.random() * descEncuestas.length)], fechaFinVigencia);
+    let cantPreguntas = Math.ceil(Math.random() * 2 + 1);
+    for (let j = 0; j < cantPreguntas; j++) {
+        let pregunta = array_preguntas[Math.floor(Math.random() * array_preguntas.length)];
+        encuesta.preguntas.push(pregunta);
+    }
+    array_encuestas.push(encuesta);
+    }
+// }
+
+crearEncuesta(descEncuestas, fechaFinVigencia);
+console.log(array_encuestas)
+for (let i = 0; i < array_encuestas[0].preguntas.length; i++) {
+    // console.log(array_encuestas[0].preguntas[i])
+}
+
+
+
+
+{/*
 //pregunta 7: ¿Qué tan satisfecho está con la calidad del servicio de atención al cliente?
 //pregunta 12: ¿Comprendió claramente las opciones disponibles para usted? 
 //pregunta 3: ¿Qué tan rápido recibió una respuesta a su pregunta?
@@ -72,4 +100,7 @@ encuesta_8.preguntas.push(array_preguntas[8], array_preguntas[3]);
 
 const array_encuestas = [encuesta_1, encuesta_2, encuesta_3, encuesta_4, encuesta_5, encuesta_6, encuesta_7, encuesta_8];
 
-export default array_encuestas;   // Exporto las clases y los objetos para poder usarlos en otros archivos
+*/}
+
+export default array_encuestas 
+export {crearEncuesta};   // Exporto las clases y los objetos para poder usarlos en otros archivos 

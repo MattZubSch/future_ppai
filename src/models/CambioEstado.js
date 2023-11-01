@@ -23,6 +23,7 @@ class CambioEstado{
     }
 }
 
+{/*
 const cambioEstado_1_1 = new CambioEstado("2023-03-29 15:42:23", "2023-03-29 15:48:41", estados[0]);
 const cambioEstado_1_2 = new CambioEstado("2023-03-29 15:48:41", null, estados[1]);
 //paquete de estados llamada 1
@@ -85,5 +86,51 @@ const paq_cambioEstado_11 = [cambioEstado_11_1, cambioEstado_11_2];
 
 //array de paquetes de estados
 const paq_cambioEstado = [paq_cambioEstado_1, paq_cambioEstado_2, paq_cambioEstado_3, paq_cambioEstado_4, paq_cambioEstado_5, paq_cambioEstado_6, paq_cambioEstado_7, paq_cambioEstado_8, paq_cambioEstado_9, paq_cambioEstado_10, paq_cambioEstado_11];
+
+
+
+*/}
+
+function crearEstadosLlamada(duration, encuestaOk, operarioOk) {
+    // Función que convierte un tiempo en formato "HH:MM:SS" a segundos
+    function tiempoASegundos(tiempo) {
+        const [horas, minutos, segundos] = tiempo.split(":").map(Number);
+        return horas * 3600 + minutos * 60 + segundos;
+    }
+
+    // Función que convierte segundos a tiempo en formato "HH:MM:SS"
+    function segundosATiempo(segundos) {
+        const horas = Math.floor(segundos / 3600);
+        const minutos = Math.floor((segundos % 3600) / 60);
+        const seg = segundos % 60;
+        return `${horas.toString().padStart(2, "0")}:${minutos.toString().padStart(2, "0")}:${seg.toString().padStart(2, "0")}`;
+    }
+
+    // Función que genera una cantidad aleatoria de tiempo en múltiples iteraciones cuya suma sea igual a la variable original
+    function generarTiemposAleatorios(tiempoOriginal, iteraciones) {
+        const totalSegundos = tiempoASegundos(tiempoOriginal);
+        let tiemposAleatorios = [];
+        let sumaSegundos = 0;
+        //ciclo for que genera una cantidad aleatoria de segundos en base a la cantidad de iteraciones
+        for (let i = 0; i < iteraciones - 1; i++) {
+            let aleatorio = Math.floor(Math.random() * (totalSegundos - sumaSegundos));
+            sumaSegundos += aleatorio;
+            tiemposAleatorios.push(segundosATiempo(aleatorio));
+        }
+
+        tiemposAleatorios.push(segundosATiempo(totalSegundos - sumaSegundos));
+
+        return tiemposAleatorios;
+    }
+
+    //Inicializo una variable que especificara la cantidad de estados
+    //Esto se calcula en base a si la llamada pasa a ser atendida por un operario o no
+    let iteraciones
+    operarioOk === "IVR" ? iteraciones = 2 : iteraciones = 3;
+
+    
+    
+}
+
 
 export default paq_cambioEstado;

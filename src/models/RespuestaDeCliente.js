@@ -90,6 +90,17 @@ function generarFechaAleatoria(fechaInicio, fechaFin) {
     return fechaAleatoria;
 }
 
+function formatearFecha(fecha) {
+    const año = fecha.getFullYear().toString().slice(-2); // Obtiene los últimos 2 dígitos del año
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // Suma 1 al mes porque los meses en JavaScript son de 0 a 11
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const horas = fecha.getHours().toString().padStart(2, '0');
+    const minutos = fecha.getMinutes().toString().padStart(2, '0');
+    const segundos = fecha.getSeconds().toString().padStart(2, '0');
+  
+    return `${año}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
+  }
+
 //Creo el Array que contendra todos los objetos RespuestaDeCliente
 let array_respuestasCliente = [];
 
@@ -106,7 +117,8 @@ const responderEncuestas = () => {
         //generar en la que se responde la encuesta
         const fechaInicio = new Date("2022-01-01T00:00:00");
         const fechaFin = new Date("2022-12-31T23:59:59");
-        const fechaAleatoria = generarFechaAleatoria(fechaInicio, fechaFin);
+        const fechaGenerada = generarFechaAleatoria(fechaInicio, fechaFin);
+        const fechaAleatoria = formatearFecha(fechaGenerada);
         console.log(fechaAleatoria) //verificar que la fecha se cree una vez por encuesta
         //Ciclo for que recorrera todas las preguntas existentes de cada encuesta
         console.log(array_encuestas[i].preguntas.length) //verificar que recorre el ciclo for

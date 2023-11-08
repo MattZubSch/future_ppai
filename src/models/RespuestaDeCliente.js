@@ -1,6 +1,7 @@
 import array_encuestas from "./Encuesta.js";
 import Encuesta from "./Encuesta.js";
 import array_preguntas from "./Pregunta.js";
+import Fecha from "./Fechas.js";
 
 
 
@@ -67,7 +68,7 @@ export const array_paq_rtaCliente = [paq_rtaCliente_1, paq_rtaCliente_2, paq_rta
 */}
 
 // Función que genera una fecha aleatoria entre dos fechas límite, incluyendo hora y minutos
-function generarFechaAleatoria(fechaInicio, fechaFin) {
+{/*function generarFechaAleatoria(fechaInicio, fechaFin) {
     // Convertir las fechas a milisegundos
     const fechaInicioMs = fechaInicio.getTime();
     const fechaFinMs = fechaFin.getTime();
@@ -100,6 +101,7 @@ function formatearFecha(fecha) {
   
     return `${año}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
   }
+*/}
 
 //Creo el Array que contendra todos los objetos RespuestaDeCliente
 let array_respuestasCliente = [];
@@ -117,8 +119,8 @@ const responderEncuestas = () => {
         //generar en la que se responde la encuesta
         const fechaInicio = new Date("2022-01-01T00:00:00");
         const fechaFin = new Date("2022-12-31T23:59:59");
-        const fechaGenerada = generarFechaAleatoria(fechaInicio, fechaFin);
-        const fechaAleatoria = formatearFecha(fechaGenerada);
+        const fechaGenerada = Fecha.generarFechaAleatoria(fechaInicio, fechaFin);
+        const fechaAleatoria = Fecha.formatearFecha(fechaGenerada);
         console.log(fechaAleatoria) //verificar que la fecha se cree una vez por encuesta
         //Ciclo for que recorrera todas las preguntas existentes de cada encuesta
         console.log(array_encuestas[i].preguntas.length) //verificar que recorre el ciclo for

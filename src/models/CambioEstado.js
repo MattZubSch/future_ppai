@@ -1,4 +1,5 @@
 import estados from "./Estado.js";
+import Fecha from "../Utilities/Fechas.js";
 
 class CambioEstado{
     constructor(fechaHoraInicio, fechaHoraFin, estado) {
@@ -92,42 +93,28 @@ const paq_cambioEstado = [paq_cambioEstado_1, paq_cambioEstado_2, paq_cambioEsta
 */}
 
 function crearEstadosLlamada(duration, encuestaOk, operarioOk) {
-    // Función que convierte un tiempo en formato "HH:MM:SS" a segundos
-    function tiempoASegundos(tiempo) {
-        const [horas, minutos, segundos] = tiempo.split(":").map(Number);
-        return horas * 3600 + minutos * 60 + segundos;
-    }
-
-    // Función que convierte segundos a tiempo en formato "HH:MM:SS"
-    function segundosATiempo(segundos) {
-        const horas = Math.floor(segundos / 3600);
-        const minutos = Math.floor((segundos % 3600) / 60);
-        const seg = segundos % 60;
-        return `${horas.toString().padStart(2, "0")}:${minutos.toString().padStart(2, "0")}:${seg.toString().padStart(2, "0")}`;
-    }
-
-    // Función que genera una cantidad aleatoria de tiempo en múltiples iteraciones cuya suma sea igual a la variable original
-    function generarTiemposAleatorios(tiempoOriginal, iteraciones) {
-        const totalSegundos = tiempoASegundos(tiempoOriginal);
-        let tiemposAleatorios = [];
-        let sumaSegundos = 0;
-        //ciclo for que genera una cantidad aleatoria de segundos en base a la cantidad de iteraciones
-        for (let i = 0; i < iteraciones - 1; i++) {
-            let aleatorio = Math.floor(Math.random() * (totalSegundos - sumaSegundos));
-            sumaSegundos += aleatorio;
-            tiemposAleatorios.push(segundosATiempo(aleatorio));
-        }
-
-        tiemposAleatorios.push(segundosATiempo(totalSegundos - sumaSegundos));
-
-        return tiemposAleatorios;
-    }
-
     //Inicializo una variable que especificara la cantidad de estados
     //Esto se calcula en base a si la llamada pasa a ser atendida por un operario o no
     let iteraciones
+    let estadosLlamada = [];
     operarioOk === "IVR" ? iteraciones = 2 : iteraciones = 3;
+    for (i = 0; i < iteraciones; i++) {
+        //Chequeamos si la llamada se encuentra en su primer iteracion para fijar la fecha de inicio
+        //A partir de aqui la duracion de la llamada se calcula en base a la duracion de los estados anteriores
+        if (i === 0){
+            //ahora chequeamos la cantidad de iteraciones (dado que si solo tiene dos estados, toda la duracion de la llamada se contendra en el estado Iniciada)
+            if (iteraciones === 2){
+                //Genero una fecha aleatoria entre el 1 de enero de 2023 y el 31 de diciembre de 2023
+                let fechaInicial = Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31));
+                //Formateo la fecha aleatoria para que quede en el formato que necesito
+                fechaFin = Fecha.formatearFecha(fechaInicial);
+                
+            }
+        }
+        
 
+    }
+    
     
     
 }

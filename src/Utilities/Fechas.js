@@ -73,7 +73,7 @@ class Fechas {
 
 const Fecha = new Fechas();
 
-console.log(Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31), 'ms'))
+console.log(Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31)))
 // let dates = new Fechas();
 // let fechaRandom = dates.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31));
 // fechaRandom = dates.formatearFecha(fechaRandom);

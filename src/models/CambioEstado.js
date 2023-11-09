@@ -105,7 +105,7 @@ function crearEstadosLlamada(duration, encuestaOk, operarioOk) {
             //ahora chequeamos la cantidad de iteraciones (dado que si solo tiene dos estados, toda la duracion de la llamada se contendra en el estado Iniciada)
             if (iteraciones === 2){
                 //Genero una fecha aleatoria entre el 1 de enero de 2023 y el 31 de diciembre de 2023
-                let fechaInicial = Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31));
+                let fechaInicial = Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31), "ms");
                 //Formateo la fecha aleatoria para que quede en el formato que necesito
                 fechaFin = Fecha.formatearFecha(fechaInicial);
                 

@@ -54,29 +54,70 @@ class Fechas {
         return `${horas.toString().padStart(2, "0")}:${minutos.toString().padStart(2, "0")}:${seg.toString().padStart(2, "0")}`;
     }
     generarTiemposAleatorios(tiempoOriginal, iteraciones) {
-        const totalSegundos = tiempoASegundos(tiempoOriginal);
+        const totalSegundos = Fecha.tiempoASegundos(tiempoOriginal);
         let tiemposAleatorios = [];
         let sumaSegundos = 0;
         //ciclo for que genera una cantidad aleatoria de segundos en base a la cantidad de iteraciones
         for (let i = 0; i < iteraciones - 1; i++) {
-            let aleatorio = Math.floor(Math.random() * (totalSegundos - sumaSegundos));
-            sumaSegundos += aleatorio;
-            tiemposAleatorios.push(segundosATiempo(aleatorio));
+            if (i === 0){
+                //genero un numero aleatorio entre 0 y el total de segundos dividido la mitad
+                let aleatorio = Math.floor(Math.random() * (totalSegundos / 2));
+                sumaSegundos += aleatorio;
+            tiemposAleatorios.push(Fecha.segundosATiempo(aleatorio));
+            } else {
+                let aleatorio = Math.floor(Math.random() * (totalSegundos - sumaSegundos));
+                sumaSegundos += aleatorio;
+                tiemposAleatorios.push(Fecha.segundosATiempo(aleatorio));
+            }
         }
 
-        tiemposAleatorios.push(segundosATiempo(totalSegundos - sumaSegundos));
+        tiemposAleatorios.push(Fecha.segundosATiempo(totalSegundos - sumaSegundos));
 
         return tiemposAleatorios;
     }
-
+    generarFechaEnBaseaDuracion(fecha, duracion) {
+        let fechaMs = fecha;
+        if (fechaMs instanceof Date === true) {
+            // Convertir la fecha a milisegundos
+            fechaMs = fecha.getTime();
+        }
+    
+        // Convertir la duración a segundos
+        const duracionSegundos = Fecha.tiempoASegundos(duracion);
+    
+        // Sumar la fecha en milisegundos con la duración en segundos
+        const fechaSumadaMs = fechaMs + duracionSegundos * 1000;
+    
+        // Devolver la fecha sumada
+        return fechaSumadaMs;
+    }
+    
 }
 
 const Fecha = new Fechas();
 
-console.log(Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31)))
-// let dates = new Fechas();
-// let fechaRandom = dates.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31));
-// fechaRandom = dates.formatearFecha(fechaRandom);
-// console.log(fechaRandom);
+{/*
+let fechaRnd = Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31), "ms")
+console.log(fechaRnd);
+// fechaRnd = Math.floor(fechaRnd);
+fechaRnd = new Date(fechaRnd);
+console.log(fechaRnd)
+// console.log(Math.floor(fechaRnd));
+console.log(Fecha.formatearFecha(new Date(fechaRnd)));
+// console.log(new Date(fechaRnd));
+let fechaMasDuracion = Fecha.generarFechaEnBaseaDuracion(fechaRnd, "01:10:00");
+// console.log(fechaMasDuracion);
+console.log(Fecha.formatearFecha(new Date(fechaMasDuracion)));
+
+let intervalos = Fecha.generarTiemposAleatorios("01:00:00", 3);
+console.log(intervalos)
+*/}
+
+// let fechaRnd = Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31), "ms")
+// console.log(Fecha.formatearFecha(new Date(fechaRnd)));
+// let fechaMasDuracion = Fecha.generarFechaEnBaseaDuracion(fechaRnd, "01:10:00");
+// // console.log(fechaMasDuracion);
+// console.log(Fecha.formatearFecha(new Date(fechaMasDuracion)));
+
 
 export default Fecha;

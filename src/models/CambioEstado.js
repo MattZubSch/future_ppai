@@ -92,7 +92,7 @@ const paq_cambioEstado = [paq_cambioEstado_1, paq_cambioEstado_2, paq_cambioEsta
 
 */}
 
-function crearEstadosLlamada(duration, encuestaOk, operarioOk) {
+export function crearEstadosLlamada(duration, encuestaOk, operarioOk) {
     //Inicializo una variable que especificara la cantidad de estados
     //Esto se calcula en base a si la llamada pasa a ser atendida por un operario o no
     let iteraciones
@@ -188,5 +188,6 @@ function crearEstadosLlamada(duration, encuestaOk, operarioOk) {
 
 let paq_cambioEstado = crearEstadosLlamada("00:10:00", true, "Operario");
 console.log(paq_cambioEstado)
+
 
 export default paq_cambioEstado;

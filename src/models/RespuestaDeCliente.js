@@ -1,7 +1,6 @@
-import array_encuestas from "./Encuesta.js";
-import Encuesta from "./Encuesta.js";
+import Encuesta, { crearEncuesta } from "./Encuesta.js";
 import array_preguntas from "./Pregunta.js";
-import Fecha from "./Fechas.js";
+import Fecha from "../Utilities/Fechas.js";
 
 
 
@@ -107,48 +106,35 @@ function formatearFecha(fecha) {
 let array_respuestasCliente = [];
 
 //Funcion que respondera a las preguntas de todas las encuestas
-const responderEncuestas = () => {
+export function responderEncuestas(fechaFinVigencia, fechaFinLlamada){
     console.log("Inicio de la funcion responderEncuestas")
-    console.log(array_encuestas)
-    //Ciclo for que recorrera todas las encuestas existentes
-    //esto podria cambiarse para que se reciclen las encuestas y se generen en una cantidad arbitraria
-    for (let i = 0; i < array_encuestas.length; i++) {
-        console.log("Ingresa al loop")
-        //Inicializo un array que contendra las respuestas de cada encuesta (array de respuestas parciales)
-        let respuestaCliente = [];
-        //generar en la que se responde la encuesta
-        const fechaInicio = new Date("2022-01-01T00:00:00");
-        const fechaFin = new Date("2022-12-31T23:59:59");
-        const fechaGenerada = Fecha.generarFechaAleatoria(fechaInicio, fechaFin);
-        const fechaAleatoria = Fecha.formatearFecha(fechaGenerada);
-        console.log(fechaAleatoria) //verificar que la fecha se cree una vez por encuesta
-        //Ciclo for que recorrera todas las preguntas existentes de cada encuesta
-        console.log(array_encuestas[i].preguntas.length) //verificar que recorre el ciclo for
-        for (let j = 0; j < array_encuestas[i].preguntas.length; j++) {
-            console.log("Ingresa al loop 2") //verificar que el ciclo for se ejecuta
-            //obtener la cantidad de respuestas posibles de cada pregunta
-            const cantRtaPosibles = array_encuestas[i].preguntas[j].rtaPosibles.length;
-            console.log("Cantidad de respuestas posibles: " + cantRtaPosibles)
-            //generar un numero aleatorio entre 0 y la cantidad de respuestas posibles, el cual corresponderá al indice de la respuesta que se eligio
-            const rtaPosibleAleatoria = Math.floor(Math.random() * cantRtaPosibles);
-            //crear un objeto respuesa que contenga la fecha en la que se respondio y la respuesta elegida. Esto se realizara para cada pregunta de la encuesta actual. 
-            //Note: revisar que la fecha aleatoria se mantenga igual (no se vuelva a generar una fecha aleatoria para cada pregunta de una misma encuesta)
-            console.log(array_encuestas[i].preguntas[j].rtaPosibles[rtaPosibleAleatoria])
-            let respuesta = new RespuestaDeCliente(fechaAleatoria, array_encuestas[i].preguntas[j].rtaPosibles[rtaPosibleAleatoria]);
-            console.log("Objeto generado: ")
-            console.log(respuesta)
-            //agregar la respuesta al array de respuestas de la encuesta actual
-            respuestaCliente.push(respuesta);
-        }
-        //terminado el recorrido por las preguntas, agregar el array de respuestas parciales al Array principal
-        array_respuestasCliente.push(respuestaCliente);
+    let encuestaResponder = crearEncuesta(fechaFinVigencia);
+    //inicio el array que contendra las respuestas de cada encuesta (array de respuestas totales)
+    let respuestaCliente = [];
+        // console.log("Ingresa al loop")
+    //Inicializo un array que contendra las respuestas de cada encuesta (array de respuestas parciales)
+    //Ciclo for que recorrera todas las preguntas existentes de cada encuesta
+    for (let i = 0; i < encuestaResponder.preguntas.length; i++) {
+            //console.log("Ingresa al loop 2") //verificar que el ciclo for se ejecuta
+        //obtener la cantidad de respuestas posibles de cada pregunta
+        const cantRtaPosibles = encuestaResponder.preguntas[i].rtaPosibles.length;
+        console.log("Cantidad de respuestas posibles: " + cantRtaPosibles)
+        //generar un numero aleatorio entre 0 y la cantidad de respuestas posibles, el cual corresponderá al indice de la respuesta que se eligio
+        const rtaPosibleAleatoria = Math.floor(Math.random() * cantRtaPosibles);
+        //crear un objeto respuesta que contenga la fecha en la que se respondio y la respuesta elegida. Esto se realizara para cada pregunta de la encuesta actual. 
+        //Note: revisar que la fecha aleatoria se mantenga igual (no se vuelva a generar una fecha aleatoria para cada pregunta de una misma encuesta)
+            //console.log(array_encuestas[i].preguntas[i].rtaPosibles[rtaPosibleAleatoria])
+        let respuesta = new RespuestaDeCliente(fechaFinLlamada, encuestaResponder.preguntas[i].rtaPosibles[rtaPosibleAleatoria]);
+            // console.log("Objeto generado: ")
+            // console.log(respuesta)
+        //agregar la respuesta al array de respuestas de la encuesta actual
+        respuestaCliente.push(respuesta);
     }
+    //terminado el recorrido por las preguntas, agregar el array de respuestas parciales al Array principal
+    array_respuestasCliente.push(respuestaCliente);
     console.log("Fin de la funcion responderEncuestas")
+    return respuestaCliente;
 }
-
-
-responderEncuestas();
-console.log(array_respuestasCliente)
 
 // Ejemplo de uso
 {/*
@@ -157,9 +143,6 @@ const fechaFin = new Date("2022-12-31T23:59:59");
 const fechaAleatoria = generarFechaAleatoria(fechaInicio, fechaFin);
 console.log(fechaAleatoria); // Imprime una fecha aleatoria entre el 1 de enero y el 31 de diciembre de 2022, incluyendo hora y minutos
 */}
-
-
-
 
 export default {array_respuestasCliente, responderEncuestas};
 

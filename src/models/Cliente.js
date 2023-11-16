@@ -36,16 +36,16 @@ const cliente_11 = new Cliente(Math.floor(Math.random() * 50000000).toString(), 
 const array_clientes = [cliente_1, cliente_2, cliente_3, cliente_4, cliente_5, cliente_6, cliente_7, cliente_8, cliente_9, cliente_10, cliente_11];
 */}
 
-//defino una lista de nombres para crear los clientes
-const nombres = ["Juan", "María", "Pedro", "Luisa", "Carlos", "Ana", "José", "Laura", "Miguel", "Carmen", "Antonio", "Isabel", "Francisco", "Elena", "Javier", "Sofía", "Ricardo", "Patricia", "Alberto", "Natalia", "Manuel", "Raquel", "David", "Lourdes", "Pablo", "Silvia", "Alejandro", "Lucía", "Fernando", "Eva"];
-//defino una lista de apellidos para crear los clientes
-const apellidos = ["González", "Rodríguez", "Pérez", "Fernández", "López", "García", "Martínez", "Sánchez", "Torres", "Ramírez", "Díaz", "Ruiz", "Vargas", "Jiménez", "Ortega", "Moreno", "Hernández", "Soto", "Castro", "Cruz", "Mendoza", "Silva", "Gómez", "Rojas", "Alvarez", "Medina", "Flores", "Vega", "Delgado", "Valencia"]
 
 //inicializo un array para cargar clientes
 const array_clientes = [];
 
 //creo una función para crear clientes
-function crearCliente() {
+export function crearCliente() {
+    //defino una lista de nombres para crear los clientes
+    const nombres = ["Juan", "María", "Pedro", "Luisa", "Carlos", "Ana", "José", "Laura", "Miguel", "Carmen", "Antonio", "Isabel", "Francisco", "Elena", "Javier", "Sofía", "Ricardo", "Patricia", "Alberto", "Natalia", "Manuel", "Raquel", "David", "Lourdes", "Pablo", "Silvia", "Alejandro", "Lucía", "Fernando", "Eva"];
+    //defino una lista de apellidos para crear los clientes
+    const apellidos = ["González", "Rodríguez", "Pérez", "Fernández", "López", "García", "Martínez", "Sánchez", "Torres", "Ramírez", "Díaz", "Ruiz", "Vargas", "Jiménez", "Ortega", "Moreno", "Hernández", "Soto", "Castro", "Cruz", "Mendoza", "Silva", "Gómez", "Rojas", "Alvarez", "Medina", "Flores", "Vega", "Delgado", "Valencia"]
     //genero un dni aleatorio
     let dni = Math.floor(Math.random() * 50000000).toString();
     //genero un nombre aleatorio
@@ -59,8 +59,7 @@ function crearCliente() {
     //creo un objeto cliente con los parámetros generados
     let cliente = new Cliente(dni, nombreCompleto, nroCelular);
     console.log(cliente)
-    //agrego el objeto cliente al array de clientes
-    array_clientes.push(cliente);
+    return cliente;
 }
   
 crearCliente()

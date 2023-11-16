@@ -25,12 +25,11 @@ class Encuesta{
 }
 //Inicializo el array que guardara las encuestas creadas
 const array_encuestas = [];
-//Creo un array con los distintos tipos de Descripciones
-const descEncuestas = ["Encuesta de satisfacción", "Encuesta de calidad del servicio", "Encuesta de atención del operario"];
-//Fijo la fecha de fin de Vigencia. De ser necesario, se podria crear un array con mas valores
-const fechaFinVigencia = "2023-12-31 09:00:00";
 
-const crearEncuesta = (descEncuestas, fechaFinVigencia) => {
+
+export function crearEncuesta(fechaFinVigencia){
+    //Creo un array con los distintos tipos de Descripciones
+    const descEncuestas = ["Encuesta de satisfacción", "Encuesta de calidad del servicio", "Encuesta de atención del operario"];
     //Creo el objeto Encuesta con los parametros iniciales
     let encuesta = new Encuesta(descEncuestas[Math.floor(Math.random() * descEncuestas.length)], fechaFinVigencia);
     //Creo un numero aleatorio de preguntas entre 2 y 3
@@ -43,14 +42,15 @@ const crearEncuesta = (descEncuestas, fechaFinVigencia) => {
     }
     //Agrego el objeto Encuesta al array de encuestas
     array_encuestas.push(encuesta);
+    return encuesta;
 }
 
 
-crearEncuesta(descEncuestas, fechaFinVigencia);
-console.log(array_encuestas)
-for (let i = 0; i < array_encuestas[0].preguntas.length; i++) {
+// crearEncuesta(fechaFinVigencia);
+// console.log(array_encuestas)
+// for (let i = 0; i < array_encuestas[0].preguntas.length; i++) {
     // console.log(array_encuestas[0].preguntas[i])
-}
+// }
 
 
 
@@ -106,5 +106,4 @@ const array_encuestas = [encuesta_1, encuesta_2, encuesta_3, encuesta_4, encuest
 
 */}
 
-export default array_encuestas 
-export {crearEncuesta};   // Exporto las clases y los objetos para poder usarlos en otros archivos 
+export default array_encuestas  // Exporto las clases y los objetos para poder usarlos en otros archivos

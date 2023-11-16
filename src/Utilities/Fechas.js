@@ -4,7 +4,7 @@ class Fechas {
     }
     crearObjetoFecha(milisegundos) {
         // Crear un objeto Date a partir de la fecha aleatoria en milisegundos
-        const fechaAleatoria = new Date(fechaAleatoriaMs);
+        const fechaAleatoria = new Date(milisegundos);
         // Generar un número aleatorio entre 0 y 23 para las horas
         const aleatorioHoras = Math.floor(Math.random() * 24);
         // Generar un número aleatorio entre 0 y 59 para los minutos
@@ -91,6 +91,28 @@ class Fechas {
         // Devolver la fecha sumada
         return fechaSumadaMs;
     }
+    generarDuracion(horaInicio, horaFin) {
+        // Calcular la diferencia en segundos entre las dos horas
+        const diferenciaSegundos = horaFin * 60 - horaInicio * 60;
+    
+        // Generar un número aleatorio entre 0 y la diferencia en segundos
+        const aleatorioSegundos = Math.ceil(Math.random() * diferenciaSegundos);
+    
+        // Devolver la duración en formato de tiempo
+        return Fecha.segundosATiempo(aleatorioSegundos);
+    
+    }
+    formatearDate(fecha) {
+        console.log("fecha recibida: " + fecha)
+        const dateObj = new Date(fecha);
+        console.log("fecha creada: " + dateObj)
+    
+        const año = dateObj.getFullYear() % 100; // Obtener los últimos dos dígitos del año
+        const mes = ('0' + (dateObj.getMonth() + 1)).slice(-2); // Agregar cero al mes si es necesario
+        const dia = ('0' + dateObj.getDate()).slice(-2); // Agregar cero al día si es necesario
+
+        return `${año}-${mes}-${dia} 00:00:00`;
+  };
     
 }
 
@@ -119,5 +141,7 @@ console.log(intervalos)
 // // console.log(fechaMasDuracion);
 // console.log(Fecha.formatearFecha(new Date(fechaMasDuracion)));
 
+// let polenta = Fecha.generarDuracion(5, 60)
+// console.log(typeof polenta)
 
 export default Fecha;

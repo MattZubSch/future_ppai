@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import gestor from "../models/GestorConsultarEncuesta.js";
+import Fecha from "../Utilities/Fechas.js";
 import "./PantallaConsultarEncuesta.css"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
@@ -10,8 +11,8 @@ function PantallaConsultarEncuesta() {
     const [periodo, setPeriodo] = useState(false)
     const [encuestas, setEncuestas] = useState(false)
 
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [fechaInicial, setStartDate] = useState('');
+    const [fechaFinal, setEndDate] = useState('');
     const [startDateOk, setStartDateOk] = useState(false);
     const [llamadaSeleccionada, setLlamadaSeleccionada] = useState(false)
 
@@ -55,7 +56,7 @@ function PantallaConsultarEncuesta() {
                         <div className="fecha">
                             <label for="start-date">Fecha de inicio:</label>
                             <input type="date" id="start-date" name="start-date"
-                            value={startDate}
+                            value={fechaInicial}
                             onChange={(e) => setStartDate(e.target.value)
                             } 
                             />
@@ -63,7 +64,7 @@ function PantallaConsultarEncuesta() {
                         <input type="submit" value="Cargar Inicio" 
                         className="btn btn-outline-success"/>
                     </form>
-                    <h6 className="p-2">Fecha Inicio: {startDate}</h6>
+                    <h6 className="p-2">Fecha Inicio: {fechaInicial}</h6>
                 </div>
                 {startDateOk &&
                 <div className="d-flex flex-column align-items-end">
@@ -71,13 +72,13 @@ function PantallaConsultarEncuesta() {
                         <div className="fecha">
                             <label for="end-date">Fecha fin:</label>
                             <input type="date" id="end-date" name="end-date"
-                            value={endDate}
+                            value={fechaFinal}
                             onChange={(e) => setEndDate(e.target.value)} />
                         </div>
                         <input type="submit" value="Cargar Fin" 
                         className="btn btn-outline-success"/>
                     </form>
-                    <h6 className="p-2">Fecha Fin: {endDate}</h6>
+                    <h6 className="p-2">Fecha Fin: {fechaFinal}</h6>
                 </div>
                 }
             </div>
@@ -88,15 +89,16 @@ function PantallaConsultarEncuesta() {
 
     const tomarFechaInicio = (e) => {
         e.preventDefault();
+        const startDate = Fecha.formatearDate(fechaInicial);
         console.log(startDate) 
         setStartDateOk(true);
     };
 
     const tomarFechaFin = (e) => {
         e.preventDefault();
-
+        const endDate = Fecha.formatearDate(fechaFinal);
         // Verificar si la fecha de finalización es mayor a la fecha inicio
-        if (endDate < startDate) {
+        if (endDate < fechaInicial) {
             alert('La fecha de finalización no puede ser menor a la fecha de inicio');
             setEndDate("");
         } else {
@@ -109,7 +111,7 @@ function PantallaConsultarEncuesta() {
     };
 
     function guardarLlamadas(){
-        gestor.tomarPeriodoFecha(startDate, endDate)
+        gestor.tomarPeriodoFecha(fechaInicial, fechaFinal)
         gestor.buscarLlamadasConEncuestas();
         return true
     }

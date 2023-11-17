@@ -152,7 +152,7 @@ function generarLlamada() {
     array_llamadas.push(llamada);
 }
 
-for (let i = 0; i < 1; i++) {
+for (let i = 0; i < 20; i++) {
     generarLlamada();
 }
 

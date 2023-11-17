@@ -162,5 +162,3 @@ class GestorConsultarEncuesta{
 const gestor = new GestorConsultarEncuesta(null, null, null, null, null, null);
 
 export default gestor;
-
-

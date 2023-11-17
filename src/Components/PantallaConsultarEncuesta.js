@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import gestor from "../models/GestorConsultarEncuesta.js";
-import Fecha from "../Utilities/Fechas.js";
 import "./PantallaConsultarEncuesta.css"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
@@ -88,21 +87,18 @@ function PantallaConsultarEncuesta() {
 
 
     const tomarFechaInicio = (e) => {
-        e.preventDefault();
-        const startDate = Fecha.formatearDate(fechaInicial);
-        console.log(startDate) 
+        e.preventDefault(); 
         setStartDateOk(true);
     };
 
     const tomarFechaFin = (e) => {
         e.preventDefault();
-        const endDate = Fecha.formatearDate(fechaFinal);
         // Verificar si la fecha de finalización es mayor a la fecha inicio
-        if (endDate < fechaInicial) {
+        if (fechaFinal < fechaInicial) {
             alert('La fecha de finalización no puede ser menor a la fecha de inicio');
             setEndDate("");
         } else {
-            console.log(endDate)
+            
             console.log('Formulario enviado');
             setEncuestas(true)
             setLlamadaSeleccionada(false)

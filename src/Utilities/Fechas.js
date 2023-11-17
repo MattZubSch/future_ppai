@@ -1,7 +1,4 @@
 class Fechas {
-    constructor() {
-
-    }
     crearObjetoFecha(milisegundos) {
         // Crear un objeto Date a partir de la fecha aleatoria en milisegundos
         const fechaAleatoria = new Date(milisegundos);
@@ -34,8 +31,10 @@ class Fechas {
         return fechaAleatoria;
     }
     formatearFecha(fecha) {
-        const año = fecha.getFullYear().toString().slice(-2); // Obtiene los últimos 2 dígitos del año
-        const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // Suma 1 al mes porque los meses en JavaScript son de 0 a 11
+        // Obtiene los últimos 2 dígitos del año
+        const año = fecha.getFullYear().toString().slice(-2); 
+        // Suma 1 al mes porque los meses en JavaScript son de 0 a 11
+        const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); 
         const dia = fecha.getDate().toString().padStart(2, '0');
         const horas = fecha.getHours().toString().padStart(2, '0');
         const minutos = fecha.getMinutes().toString().padStart(2, '0');
@@ -103,45 +102,18 @@ class Fechas {
     
     }
     formatearDate(fecha) {
-        console.log("fecha recibida: " + fecha)
         const dateObj = new Date(fecha);
-        console.log("fecha creada: " + dateObj)
-    
-        const año = dateObj.getFullYear() % 100; // Obtener los últimos dos dígitos del año
-        const mes = ('0' + (dateObj.getMonth() + 1)).slice(-2); // Agregar cero al mes si es necesario
-        const dia = ('0' + dateObj.getDate()).slice(-2); // Agregar cero al día si es necesario
+        
+        // Obtener los últimos dos dígitos del año
+        const año = dateObj.getFullYear() % 100; 
+        // Agregar cero al mes si es necesario
+        const mes = ('0' + (dateObj.getMonth() + 1)).slice(-2); 
+        // Agregar cero al día si es necesario
+        const dia = ('0' + dateObj.getDate()).slice(-2);
 
         return `${año}-${mes}-${dia} 00:00:00`;
   };
-    
 }
 
 const Fecha = new Fechas();
-
-{/*
-let fechaRnd = Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31), "ms")
-console.log(fechaRnd);
-// fechaRnd = Math.floor(fechaRnd);
-fechaRnd = new Date(fechaRnd);
-console.log(fechaRnd)
-// console.log(Math.floor(fechaRnd));
-console.log(Fecha.formatearFecha(new Date(fechaRnd)));
-// console.log(new Date(fechaRnd));
-let fechaMasDuracion = Fecha.generarFechaEnBaseaDuracion(fechaRnd, "01:10:00");
-// console.log(fechaMasDuracion);
-console.log(Fecha.formatearFecha(new Date(fechaMasDuracion)));
-
-let intervalos = Fecha.generarTiemposAleatorios("01:00:00", 3);
-console.log(intervalos)
-*/}
-
-// let fechaRnd = Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31), "ms")
-// console.log(Fecha.formatearFecha(new Date(fechaRnd)));
-// let fechaMasDuracion = Fecha.generarFechaEnBaseaDuracion(fechaRnd, "01:10:00");
-// // console.log(fechaMasDuracion);
-// console.log(Fecha.formatearFecha(new Date(fechaMasDuracion)));
-
-// let polenta = Fecha.generarDuracion(5, 60)
-// console.log(typeof polenta)
-
 export default Fecha;

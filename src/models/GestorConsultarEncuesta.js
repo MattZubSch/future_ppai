@@ -51,7 +51,7 @@ class GestorConsultarEncuesta{
         let respuestasCliente = this.llamadaSeleccionada.mostrarRespuestasCliente();
         //defino el objeto que devolvera toda la informacion de la llamada seleccionada
         let datosLlamadaSelec = this.buscarEncuesta(respuestasCliente)
-        console.log(datosLlamadaSelec)
+            //console.log(datosLlamadaSelec)
         if (datosLlamadaSelec !== false){
             let llamada = this.llamadaSeleccionada.mostrarDatos();
             datosLlamadaSelec = { ...datosLlamadaSelec, datosLlamada: llamada}

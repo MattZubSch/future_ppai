@@ -72,7 +72,6 @@ export function crearEstadosLlamada(duration, encuestaOk, operarioOk) {
             if (i === 0){
                 //creamos los intervalos de duracion por los que pasara la llamada
                 intervalos = Fecha.generarTiemposAleatorios(duration, iteraciones - 1);
-                    //console.log(intervalos)
                 //Genero una fecha aleatoria entre un periodo de tiempo. La misma se guardara en segundos milisegundos para poder poder operar con ella
                 fechaEnMs = Fecha.generarFechaAleatoria(new Date(2023, 0, 1), new Date(2023, 11, 31), "ms");
                 //Formateo la fecha aleatoria para que quede en el formato que necesito
@@ -83,7 +82,6 @@ export function crearEstadosLlamada(duration, encuestaOk, operarioOk) {
                 let fechaFin = Fecha.formatearFecha(new Date(fechaEnMs));
                 //Creo el estado
                 let estado = new CambioEstado(fechaInicio, fechaFin, estados[0]);
-                    //console.log("Estado " + i + " creado.")
                 //Lo agrego al array de estados
                 estadosLlamada.push(estado);
             } else {
@@ -91,7 +89,6 @@ export function crearEstadosLlamada(duration, encuestaOk, operarioOk) {
                 let fechaInicio = estadosLlamada[i-1].getFechaHoraFin();
                 //Genero una fecha de fin en base a la fecha de inicio y un punto medio de la duracion de la llamada siempre que no sera el ultimo estado
                 if (i === iteraciones - 1) {
-                        //console.log("ingresa al intervalo final")
                     let fechaFin = null;
                     //creamos el estado
                     if (encuestaOk) {

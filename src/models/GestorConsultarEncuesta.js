@@ -2,7 +2,7 @@ import array_llamadas from "./Llamada.js";
 import array_encuestas from "./Encuesta.js";
 
 class GestorConsultarEncuesta{
-    constructor(fecha, fechaInicio, fechaFin, csv, llamadasEncuesta, llamadaSeleccionada){
+    constructor(fecha, fechaInicio, fechaFin, csv, llamadaSeleccionada){
         this.fecha = fecha;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -51,7 +51,6 @@ class GestorConsultarEncuesta{
         let respuestasCliente = this.llamadaSeleccionada.mostrarRespuestasCliente();
         //defino el objeto que devolvera toda la informacion de la llamada seleccionada
         let datosLlamadaSelec = this.buscarEncuesta(respuestasCliente)
-            //console.log(datosLlamadaSelec)
         if (datosLlamadaSelec !== false){
             let llamada = this.llamadaSeleccionada.mostrarDatos();
             datosLlamadaSelec = { ...datosLlamadaSelec, datosLlamada: llamada}

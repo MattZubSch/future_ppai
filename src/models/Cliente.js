@@ -30,10 +30,9 @@ export function crearCliente() {
     let nroCelular = (Math.floor(Math.random() * 8999999) + 1000000).toString();
     //creo un objeto cliente con los parámetros generados
     let cliente = new Cliente(dni, nombreCompleto, nroCelular);
-        //console.log(cliente)
+    //retorno el cliente creado
     return cliente;
 }
-  
 
-
-export default array_clientes;   // Exporto las clases y los objetos para poder usarlos en otros archivos
+// Exporto las clases y los objetos para poder usarlos en otros archivos
+export default array_clientes;

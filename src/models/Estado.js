@@ -20,4 +20,5 @@ const estado_enCurso = new Estado("En curso");
 
 const estados = [estado_iniciada, estado_finalizada, estado_cancelada, estado_enCurso];
 
-export default estados   // Exporto las clases y los objetos para poder usarlos en otros archivos
+// Exporto las clases y los objetos para poder usarlos en otros archivos
+export default estados

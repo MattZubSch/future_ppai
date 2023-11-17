@@ -32,11 +32,8 @@ class Llamada{
     esFinalizada(){
         let resultado = false;
         this.cambioEstado.forEach(cambioEstado => {
-            // console.log("resultado es ultimo estado: " + cambioEstado.esUltimoEstado())
             if (cambioEstado.esUltimoEstado()){
-                // console.log("resultado es finalizado: " + cambioEstado.estado.esFinalizada())
                 if (cambioEstado.estado.esFinalizada()){
-                    // console.log("entro a esFinalizada")
                     resultado = true;
                 };
             }})
@@ -84,7 +81,6 @@ function generarLlamada() {
             return "Opcion 1";
         } else {
             return "Opcion 2";
-            // return "Operador N°" + Math.ceil(Math.random() * 20) + "";
         }
     }
     //Definimos el valor del operador de la llamada
@@ -152,16 +148,12 @@ function generarLlamada() {
 
     //creamos la llamada
     const llamada = new Llamada(descripcionOperador, detalleAccionRequerida, duracion, encuestaEnviada, observacionAuditor, cliente, cambioEstado, respuestaCliente);
-        //console.log(llamada)
     //agregamos la llamada al array de llamadas
     array_llamadas.push(llamada);
-    
-    
 }
 
 for (let i = 0; i < 1; i++) {
     generarLlamada();
 }
-
 
 export default array_llamadas;

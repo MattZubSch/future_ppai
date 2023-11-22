@@ -1,8 +1,9 @@
 import array_llamadas from "./Llamada.js";
 import array_encuestas from "./Encuesta.js";
 
-class GestorConsultarEncuesta{
+class GestorConsultarEncuesta extends IAgregado{
     constructor(fecha, fechaInicio, fechaFin, csv, llamadaSeleccionada){
+        super();
         this.fecha = fecha;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -16,6 +17,9 @@ class GestorConsultarEncuesta{
     tomarPeriodoFecha(fechaInicio, fechaFin){
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+    }
+    crearIterador(array_llamadas) {
+        return new IteradorConcreto(array_llamadas);
     }
     buscarLlamadasConEncuestas(){
         this.llamadasEncuesta = [];

@@ -4,7 +4,7 @@ import { responderEncuestas } from "./RespuestaDeCliente.js";
 import { crearCliente } from "./Cliente.js";
 
 
-class Llamada{
+export class Llamada{
     constructor(descripcionOperador, detalleAccionRequerida, duracion, encuestaEnviada, observacionAuditor, cliente, cambioEstado, respuestaCliente){
         this.descripcionOperador = descripcionOperador;
         this.detalleAccionRequerida = detalleAccionRequerida;

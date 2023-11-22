@@ -1,5 +1,7 @@
 import array_llamadas from "./Llamada.js";
 import array_encuestas from "./Encuesta.js";
+import { IteradorLlamada } from "../patterns/iterator/IteradorLlamada.ts";
+import { IAgregado } from "../patterns/iterator/IAgregado.js";
 
 class GestorConsultarEncuesta extends IAgregado{
     constructor(fecha, fechaInicio, fechaFin, csv, llamadaSeleccionada){
@@ -19,19 +21,56 @@ class GestorConsultarEncuesta extends IAgregado{
         this.fechaFin = fechaFin;
     }
     crearIterador(array_llamadas) {
-        return new IteradorConcreto(array_llamadas);
+        return new IteradorLlamada(array_llamadas);
+    }
+    primero() {
+        this.iterador.primero();
+    }
+    haTerminado() {
+    return this.iterador.haTerminado();
+    }
+    actual() {
+    return this.iterador.actual();
+    }
+    siguiente() {
+    this.iterador.siguiente();
+    }
+    cumpleFiltro(filtro){
+        return this.iterador.cumpleFiltro(filtro);
     }
     buscarLlamadasConEncuestas(){
         this.llamadasEncuesta = [];
-        array_llamadas.forEach(llamada => {
-            if (llamada.esDePeriodo(this.fechaInicio, this.fechaFin)){
-                if (llamada.esFinalizada()) {
-                    if (llamada.esEncuestaRespondida()){
-                    this.llamadasEncuesta.push(llamada);
-                }
-                }
+        console.log("1- Se Inicia la busqueda de llamadas con encuestas")
+        this.iterador = this.crearIterador(array_llamadas);
+        console.log("2- Se crea el iterador de Llamadas")
+        this.primero();
+        console.log("3- Se posiciona el iterador en el primer elemento")
+        while (!this.haTerminado()) {
+            console.log("4- Ingresamos al ciclo while")
+            const llamadaActual = this.actual();
+            console.log("5 - verificamos el objeto actual del iterador")
+            console.log(llamadaActual)
+            if (this.cumpleFiltro({
+                esDePeriodo: { fechaInicioOrig: this.fechaInicio, fechaFinOrig: this.fechaFin },
+                esFinalizada: { esFinalizada: "esFinalizada" },
+                esEncuestaRespondida: { esEncuestaRespondida: "esEncuestaRespondida" }
+              })) {
+                this.llamadasEncuesta.push(llamadaActual);
+                console.log(llamadaActual);
             }
-        })
+          
+            this.siguiente();
+          }
+
+        // array_llamadas.forEach(llamada => {
+        //     if (llamada.esDePeriodo(this.fechaInicio, this.fechaFin)){
+        //         if (llamada.esFinalizada()) {
+        //             if (llamada.esEncuestaRespondida()){
+        //             this.llamadasEncuesta.push(llamada);
+        //         }
+        //         }
+        //     }
+        // })
         return this.llamadasEncuesta;
     }
     getFechaActual(){

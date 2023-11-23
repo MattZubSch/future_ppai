@@ -62,15 +62,6 @@ class GestorConsultarEncuesta extends IAgregado{
             this.siguiente();
           }
 
-        // array_llamadas.forEach(llamada => {
-        //     if (llamada.esDePeriodo(this.fechaInicio, this.fechaFin)){
-        //         if (llamada.esFinalizada()) {
-        //             if (llamada.esEncuestaRespondida()){
-        //             this.llamadasEncuesta.push(llamada);
-        //         }
-        //         }
-        //     }
-        // })
         return this.llamadasEncuesta;
     }
     getFechaActual(){

@@ -1,7 +1,6 @@
-import array_llamadas from "./Llamada.js";
-import array_encuestas from "./Encuesta.js";
 import { IteradorLlamada } from "../patterns/iterator/IteradorLlamada.ts";
 import { IAgregado } from "../patterns/iterator/IAgregado.js";
+
 
 class GestorConsultarEncuesta extends IAgregado{
     constructor(fecha, fechaInicio, fechaFin, csv, llamadaSeleccionada){
@@ -20,37 +19,23 @@ class GestorConsultarEncuesta extends IAgregado{
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
-    crearIterador(array_llamadas) {
-        return new IteradorLlamada(array_llamadas);
+    crearIterador(arrayLlamadas) {
+        console.log(arrayLlamadas)
+        return new IteradorLlamada(arrayLlamadas);
     }
-    primero() {
-        this.iterador.primero();
-    }
-    haTerminado() {
-    return this.iterador.haTerminado();
-    }
-    actual() {
-    return this.iterador.actual();
-    }
-    siguiente() {
-    this.iterador.siguiente();
-    }
-    cumpleFiltro(filtro){
-        return this.iterador.cumpleFiltro(filtro);
-    }
-    buscarLlamadasConEncuestas(){
+    buscarLlamadasConEncuestas(arrayLlamadas){
         this.llamadasEncuesta = [];
         console.log("1- Se Inicia la busqueda de llamadas con encuestas")
-        this.iterador = this.crearIterador(array_llamadas);
+        this.iterador = this.crearIterador(arrayLlamadas);
         console.log("2- Se crea el iterador de Llamadas")
-        this.primero();
+        this.iterador.primero();
         console.log("3- Se posiciona el iterador en el primer elemento")
-        while (!this.haTerminado()) {
+        while (!this.iterador.haTerminado()) {
             console.log("4- Ingresamos al ciclo while")
-            const llamadaActual = this.actual();
+            const llamadaActual = this.iterador.actual();
             console.log("5 - verificamos el objeto actual del iterador")
             console.log(llamadaActual)
-            if (this.cumpleFiltro({
+            if (this.iterador.cumpleFiltro({
                 esDePeriodo: { fechaInicioOrig: this.fechaInicio, fechaFinOrig: this.fechaFin },
                 esFinalizada: { esFinalizada: "esFinalizada" },
                 esEncuestaRespondida: { esEncuestaRespondida: "esEncuestaRespondida" }
@@ -59,7 +44,7 @@ class GestorConsultarEncuesta extends IAgregado{
                 console.log(llamadaActual);
             }
           
-            this.siguiente();
+            this.iterador.siguiente();
           }
 
         return this.llamadasEncuesta;
@@ -80,11 +65,11 @@ class GestorConsultarEncuesta extends IAgregado{
     tomarSeleccionLlamada(llamadaSeleccionada){
         this.llamadaSeleccionada = llamadaSeleccionada;
     }
-    obtenerDatosLlamadaSeleccionada(){
+    obtenerDatosLlamadaSeleccionada(arrayEncuestas){
         //buscar array con respuestas de cliente
         let respuestasCliente = this.llamadaSeleccionada.mostrarRespuestasCliente();
         //defino el objeto que devolvera toda la informacion de la llamada seleccionada
-        let datosLlamadaSelec = this.buscarEncuesta(respuestasCliente)
+        let datosLlamadaSelec = this.buscarEncuesta(arrayEncuestas, respuestasCliente)
         if (datosLlamadaSelec !== false){
             let llamada = this.llamadaSeleccionada.mostrarDatos();
             datosLlamadaSelec = { ...datosLlamadaSelec, datosLlamada: llamada}
@@ -92,13 +77,13 @@ class GestorConsultarEncuesta extends IAgregado{
 
     return datosLlamadaSelec
     }
-    buscarEncuesta(arrayRtas){
+    buscarEncuesta(arrayEncuestas, arrayRtas){
         //defino array que guarde las preguntas filtradas
         let retorno = false;
         let preguntas = [];
         //busco por cada encuesta sus preguntas asociadas
         //aqui inicio el segundo loop
-        array_encuestas.forEach(encuesta => {
+        arrayEncuestas.forEach(encuesta => {
             for (let i = 0; i < arrayRtas.length; i++) {
                 let rtaCliente = encuesta.esRespuestaPosible(arrayRtas[i])
                 if (rtaCliente !== false){

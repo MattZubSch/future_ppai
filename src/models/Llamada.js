@@ -1,8 +1,4 @@
 import Fecha from "../Utilities/Fechas.js";
-import { crearEstadosLlamada } from "./CambioEstado.js";
-import { responderEncuestas } from "./RespuestaDeCliente.js";
-import { crearCliente } from "./Cliente.js";
-
 
 export class Llamada{
     constructor(descripcionOperador, detalleAccionRequerida, duracion, encuestaEnviada, observacionAuditor, cliente, cambioEstado, respuestaCliente){
@@ -70,6 +66,7 @@ export class Llamada{
 
 }
 
+{/*
 //creamos el array de llamadas para exportarlas
 const array_llamadas = [];
 //funcion que generará todos los componentes de la llamada
@@ -152,8 +149,23 @@ function generarLlamada() {
     array_llamadas.push(llamada);
 }
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 2; i++) {
     generarLlamada();
+//     console.log("LLamada N°" + (i + 1) + " generada");
+//     console.log("--------------------------------------------------")
+//     console.log("Datos de la llamada: ")
+    console.log(array_llamadas[i])
+//     console.log("--------------------------------------------------")
+//     console.log("Datos del cliente: ")
+//     console.log(array_llamadas[i].cliente)
+//     console.log("--------------------------------------------------")
+//     console.log("Datos del cambio de estado: ")
+//     console.log(array_llamadas[i].cambioEstado)
+//     console.log("--------------------------------------------------")
+//     console.log("Datos de la Respuesta del Cliente: ")
+//     console.log(array_llamadas[i].respuestaCliente)
 }
 
 export default array_llamadas;
+
+*/}

@@ -1,10 +1,9 @@
-import array_preguntas from "./Pregunta.js";
-
-class Encuesta{
-    constructor(descripcion, fechaFinVigencia) {
+export class Encuesta{
+    constructor(id, descripcion, fechaFinVigencia, preguntas) {
+        this.id = id;
         this.descripcion = descripcion;
         this.fechaFinVigencia = fechaFinVigencia;
-        this.preguntas = [];
+        this.preguntas = preguntas;
     }
     getDescripcionEncuesta(){
         return this.descripcion;
@@ -14,15 +13,22 @@ class Encuesta{
     }
     esRespuestaPosible(respuesta){
         let rtaPosible = false;
+        console.log("=======Revisar contenido preguntas=======")
+        console.log(this.preguntas)
         this.preguntas.forEach(pregunta => {
-            let respuestasPosibles = pregunta.getRtaPosibles()
-            if (respuestasPosibles.indexOf(respuesta) !== -1){
-                rtaPosible = {pregunta: pregunta, respuesta: respuesta}
+            console.log(pregunta)
+            if (pregunta !== null){
+                let respuestasPosibles = pregunta.getRtaPosibles()
+                if (respuestasPosibles.indexOf(respuesta) !== -1){
+                    rtaPosible = {pregunta: pregunta, respuesta: respuesta}
+                }
             }
         })
         return rtaPosible
     }
 }
+
+{/*
 //Inicializo el array que guardara las encuestas creadas
 const array_encuestas = [];
 
@@ -47,3 +53,5 @@ export function crearEncuesta(fechaFinVigencia){
 
 // Exporto las clases y los objetos para poder usarlos en otros archivos
 export default array_encuestas 
+
+*/}

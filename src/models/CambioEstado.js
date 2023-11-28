@@ -1,11 +1,13 @@
 import estados from "./Estado.js";
 import Fecha from "../Utilities/Fechas.js";
 
-class CambioEstado{
-    constructor(fechaHoraInicio, fechaHoraFin, estado) {
+export class CambioEstado{
+    constructor(id, fechaHoraInicio, fechaHoraFin, estado, idLlamada) {
+        this.idCambioEstado = id;
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
         this.estado = estado;
+        this.idLlamada = idLlamada;
     }
     getFechaHoraInicio(){
         return this.fechaHoraInicio;

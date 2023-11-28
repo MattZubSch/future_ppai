@@ -1,20 +1,43 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import gestor from "../models/GestorConsultarEncuesta.js";
 import "./PantallaConsultarEncuesta.css"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
+import { recuperarObjetos } from "../persistance/IPersistencia.js";
 
 
 function PantallaConsultarEncuesta() {
+
     const [ventana, setVentana] = useState(false)
     const [periodo, setPeriodo] = useState(false)
     const [encuestas, setEncuestas] = useState(false)
+    const [arrayLlamadas, setArrayLlamadas] = useState([])
+    const [arrayEncuestas, setArrayEncuestas] = useState([])
 
     const [fechaInicial, setStartDate] = useState('');
     const [fechaFinal, setEndDate] = useState('');
     const [startDateOk, setStartDateOk] = useState(false);
     const [llamadaSeleccionada, setLlamadaSeleccionada] = useState(false)
 
+    useEffect(() => {
+        // Aquí puedes realizar la carga de datos desde la base de datos
+        const fetchData = async () => {
+            try {
+                const response = await recuperarObjetos(); // Reemplaza con tu lógica para obtener datos
+                setArrayLlamadas(response.llamadas);
+                setArrayEncuestas(response.encuestas);
+            } catch (error) {
+                console.error('Error al cargar datos:', error);
+            }
+        };
+    
+        fetchData();
+    }, []); // El segundo argumento vacío [] asegura que este efecto se ejecute solo una vez al montar el componente
+
+    useEffect(() => {
+        console.log(arrayLlamadas);
+        console.log(arrayEncuestas)
+    }, [arrayLlamadas, arrayEncuestas]);
     const [cancel, setCancel] = useState(false)
 
     function Inicio(){
@@ -108,7 +131,7 @@ function PantallaConsultarEncuesta() {
 
     function guardarLlamadas(){
         gestor.tomarPeriodoFecha(fechaInicial, fechaFinal)
-        gestor.buscarLlamadasConEncuestas();
+        gestor.buscarLlamadasConEncuestas(arrayLlamadas);
         return true
     }
 
@@ -164,7 +187,7 @@ function PantallaConsultarEncuesta() {
     }
 
     function mostrarDatosLlamadaSeleccionada(){
-        let datos = gestor.obtenerDatosLlamadaSeleccionada()
+        let datos = gestor.obtenerDatosLlamadaSeleccionada(arrayEncuestas)
         return (
             <div>
                 <table className="table table-striped table-hover mx-auto">

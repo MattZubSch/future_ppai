@@ -1,5 +1,6 @@
-class Estado{
-    constructor(nombre) {
+export class Estado{
+    constructor(id, nombre) {
+        this.id = id;
         this.nombre = nombre;
     }
     getNombre(){

@@ -1,5 +1,6 @@
 import { IteradorEncuestas } from "../patterns/iterator/IteradorEncuestas.ts";
 import { IAgregado } from "../patterns/iterator/IAgregado.js";
+import { Pregunta } from "./Pregunta.js";
 
 export class Encuesta extends IAgregado{
     constructor(id, descripcion, fechaFinVigencia, preguntas) {
@@ -60,14 +61,13 @@ export class Encuesta extends IAgregado{
     }
     esRespuestaPosible(respuesta){
         let rtaPosible = false;
-        this.preguntas.forEach(pregunta => {
-            if (pregunta !== null){
-                let respuestasPosibles = pregunta.getRtaPosibles()
-                if (respuestasPosibles.indexOf(respuesta) !== -1){
-                    rtaPosible = {pregunta: pregunta, respuesta: respuesta}
-                }
+        let pregEncuesta = this.preguntas
+                    .filter(pregunta => pregunta !== null)
+        let encuestaCorrecta = Pregunta.esRespuestaPosible(pregEncuesta, respuesta)
+            if (encuestaCorrecta){
+                rtaPosible = true;
             }
-        })
+        console.log("retorna rta posible")
         return rtaPosible
     }
 }

@@ -26,14 +26,16 @@ export class IteradorEncuestas implements IIterator<Encuesta> {
         const encuestaActual = this.actual();
 
         // Verificar cada respuesta del filtro
-        for (const respuesta of filtros.respuestas) {
-            const resultado = encuestaActual.esRespuestaPosible(respuesta);
+        // for (const respuesta of filtros.respuestas) {
+        //   console.log("respuesta del iterador encuestas")
+        //   console.log(respuesta);
+            const resultado = encuestaActual.esRespuestaPosible(filtros.respuestas);
 
             // Si alguna respuesta no es posible, la encuesta no cumple el filtro
             if (!resultado) {
                 return false;
             }
-        }
+        // }
 
         // Si todas las respuestas son posibles, la encuesta cumple el filtro
         return true;

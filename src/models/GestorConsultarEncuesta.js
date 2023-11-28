@@ -1,6 +1,6 @@
 import { IteradorLlamada } from "../patterns/iterator/IteradorLlamada.ts";
 import { IAgregado } from "../patterns/iterator/IAgregado.js";
-
+import { Encuesta } from "./Encuesta.js";
 
 class GestorConsultarEncuesta extends IAgregado{
     constructor(fecha, fechaInicio, fechaFin, csv, llamadaSeleccionada){
@@ -69,7 +69,7 @@ class GestorConsultarEncuesta extends IAgregado{
         //buscar array con respuestas de cliente
         let respuestasCliente = this.llamadaSeleccionada.mostrarRespuestasCliente();
         //defino el objeto que devolvera toda la informacion de la llamada seleccionada
-        let datosLlamadaSelec = this.buscarEncuesta(arrayEncuestas, respuestasCliente)
+        let datosLlamadaSelec = Encuesta.buscarEncuesta(arrayEncuestas, respuestasCliente)
         if (datosLlamadaSelec !== false){
             let llamada = this.llamadaSeleccionada.mostrarDatos();
             datosLlamadaSelec = { ...datosLlamadaSelec, datosLlamada: llamada}
@@ -77,35 +77,35 @@ class GestorConsultarEncuesta extends IAgregado{
 
     return datosLlamadaSelec
     }
-    buscarEncuesta(arrayEncuestas, arrayRtas){
-        //defino array que guarde las preguntas filtradas
-        let retorno = false;
-        let preguntas = [];
-        //busco por cada encuesta sus preguntas asociadas
-        //aqui inicio el segundo loop
-        arrayEncuestas.forEach(encuesta => {
-            for (let i = 0; i < arrayRtas.length; i++) {
-                let rtaCliente = encuesta.esRespuestaPosible(arrayRtas[i])
-                if (rtaCliente !== false){
-                    preguntas.push(rtaCliente.pregunta)
-                } else {
-                    preguntas = [];
-                    break;
-                }
-            }
-            if (preguntas.length === arrayRtas.length){
-                //si se encontro la encuesta, guardarla en una variable
-                let descEncuesta = encuesta.getDescripcionEncuesta();
-                let descPreguntas = preguntas.map(pregunta => pregunta.getDescripcion())
-                //defino el objeto que contendra los datos de la llamada, la encuesta, las preguntas y las respuestas
-                retorno = {encuesta: descEncuesta, preguntas: descPreguntas, respuestaCliente: arrayRtas, datosLlamada: null}
-            }
-        })
-        return retorno
-    }
-    tomarFormaVisualizacion(){
+    // buscarEncuesta(arrayEncuestas, arrayRtas){
+    //     //defino array que guarde las preguntas filtradas
+    //     let retorno = false;
+    //     let preguntas = [];
+    //     //busco por cada encuesta sus preguntas asociadas
+    //     //aqui inicio el segundo loop
+    //     arrayEncuestas.forEach(encuesta => {
+    //         for (let i = 0; i < arrayRtas.length; i++) {
+    //             let rtaCliente = encuesta.esRespuestaPosible(arrayRtas[i])
+    //             if (rtaCliente !== false){
+    //                 preguntas.push(rtaCliente.pregunta)
+    //             } else {
+    //                 preguntas = [];
+    //                 break;
+    //             }
+    //         }
+    //         if (preguntas.length === arrayRtas.length){
+    //             //si se encontro la encuesta, guardarla en una variable
+    //             let descEncuesta = encuesta.getDescripcionEncuesta();
+    //             let descPreguntas = preguntas.map(pregunta => pregunta.getDescripcion())
+    //             //defino el objeto que contendra los datos de la llamada, la encuesta, las preguntas y las respuestas
+    //             retorno = {encuesta: descEncuesta, preguntas: descPreguntas, respuestaCliente: arrayRtas, datosLlamada: null}
+    //         }
+    //     })
+    //     return retorno
+    // }
+    tomarFormaVisualizacion(arrayEncuestas){
         const table = document.createElement('table');
-        let datos = this.obtenerDatosLlamadaSeleccionada()
+        let datos = this.obtenerDatosLlamadaSeleccionada(arrayEncuestas)
         table.innerHTML = `
             <tr>
               <td>Cliente</td>

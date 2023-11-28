@@ -29,10 +29,3 @@ export async function recuperarCambioEstado() {
         });
     }
 )};
-
-async function main() {
-    const llamadas = await recuperarCambioEstado();
-    console.log(llamadas);
-}
-
-// main();

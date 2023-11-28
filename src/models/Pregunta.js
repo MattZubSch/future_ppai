@@ -10,15 +10,11 @@ export class Pregunta{
         return this.pregunta;
     }
     getRtaPosibles(){
-        // console.log("entra 1")
         let rtaPosibles = [];
-        // console.log("entra 2")
+
         this.rtaPosibles.forEach(rtaPosible => {
-            console.log(rtaPosible.getDescripcionRta())
             rtaPosibles.push(rtaPosible.getDescripcionRta());
-            // console.log("entra 4 - iteracion")
         })
-        console.log(rtaPosibles)
         return rtaPosibles;
     }
 }

@@ -30,10 +30,3 @@ export async function recuperarIdPregunta(id) {
             });
     });
 }
-
-async function main() {
-    const res = await recuperarIdPregunta(2);
-    console.log(res);
-}
-
-// main();

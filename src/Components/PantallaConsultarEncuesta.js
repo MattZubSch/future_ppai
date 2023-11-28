@@ -38,15 +38,18 @@ function PantallaConsultarEncuesta() {
         console.log(arrayLlamadas);
         console.log(arrayEncuestas)
     }, [arrayLlamadas, arrayEncuestas]);
+
     const [cancel, setCancel] = useState(false)
 
     function Inicio(){
         return (
-            <button
-            className="btn btn-primary p-2 m-5" 
-            onClick={() => opcionConsultarEncuesta()}>
-                Consultar Encuesta
-            </button>
+            <div className="justify-content-center d-flex align-items-center">
+                <button
+                className="btn btn-primary p-2 m-5 btn-lg btn-block" 
+                onClick={() => opcionConsultarEncuesta()}>
+                    Consultar Encuesta
+                </button>
+            </div>
         )
     }
     
@@ -69,31 +72,41 @@ function PantallaConsultarEncuesta() {
             </div>
         )
     }
-
+    
     function pedirPeriodoFecha(){
+
+        
         return (
-            <div className="d-flex flex-row m-1 justify-content-around">
-                <div className="d-flex flex-column align-items-start">
+            <div className="d-flex flex-row m-1 justify-content-between">
+                <div className="d-flex flex-column align-items-start ml-3 w-50">
                     <form onSubmit={tomarFechaInicio}>
                         <div className="fecha">
-                            <label for="start-date">Fecha de inicio:</label>
-                            <input type="date" id="start-date" name="start-date"
+                            <label htmlFor="start-date">Fecha de inicio:</label>
+                            <input 
+                            type="date" 
+                            id="start-date" 
+                            name="start-date"
                             value={fechaInicial}
                             onChange={(e) => setStartDate(e.target.value)
                             } 
                             />
                         </div>
-                        <input type="submit" value="Cargar Inicio" 
+                        <input 
+                        type="submit" 
+                        value="Cargar Inicio" 
                         className="btn btn-outline-success"/>
                     </form>
                     <h6 className="p-2">Fecha Inicio: {fechaInicial}</h6>
                 </div>
                 {startDateOk &&
-                <div className="d-flex flex-column align-items-end">
+                <div className="d-flex flex-column align-items-end w-50">
                     <form onSubmit={tomarFechaFin}>
                         <div className="fecha">
-                            <label for="end-date">Fecha fin:</label>
-                            <input type="date" id="end-date" name="end-date"
+                            <label htmlFor="end-date">Fecha fin:</label>
+                            <input 
+                            type="date" 
+                            id="end-date" 
+                            name="end-date"
                             value={fechaFinal}
                             onChange={(e) => setEndDate(e.target.value)} />
                         </div>
@@ -106,14 +119,14 @@ function PantallaConsultarEncuesta() {
             </div>
         )
     }
-
-
-
+    
     const tomarFechaInicio = (e) => {
         e.preventDefault(); 
         setStartDateOk(true);
     };
-
+    
+    
+    
     const tomarFechaFin = (e) => {
         e.preventDefault();
         // Verificar si la fecha de finalización es mayor a la fecha inicio
@@ -140,22 +153,21 @@ function PantallaConsultarEncuesta() {
         setLlamadaSeleccionada(true)
     }
 
-    function BotonCancelar(){
+
+    function navegacion(){
         return (
-            <footer className="footer p-2 py-4">
-                <div className="Btn-container d-flex justify-content-end">
-                    <button onClick={() => {cancelar()}} className="btn btn-primary p-3 m-5">Cancelar</button>
-                    {cancel && window.confirm("¿Desea cancelar la consulta?")}
-                </div>  
-            </footer>
-            )
+            <div className="Btn-container d-flex justify-content-center">
+                <button onClick={() => {volver()}} className="btn btn-primary p-2 m-5">Volver</button>
+                <button onClick={() => {cancelar()}} className="btn btn-danger p-2 m-5">Cancelar</button>
+            </div>
+        )
     }
 
     function mostrarLlamadasConEncuesta(){
         if (gestor.llamadasEncuesta.length === 0){
             return (
                 <div className="mx-auto">
-                    <h3>No hay llamadas con encuestas en el periodo seleccionado</h3>
+                    <h3 className="text-align">No hay llamadas con encuestas en el periodo seleccionado</h3>
                 </div>
             )
         }
@@ -250,7 +262,7 @@ function PantallaConsultarEncuesta() {
     }
 
     function tomarSeleccionFormaVisualizacion(){
-        return gestor.tomarFormaVisualizacion()
+        return gestor.tomarFormaVisualizacion(arrayEncuestas)
     }
 
     function confirmCancelar() {
@@ -272,6 +284,11 @@ function PantallaConsultarEncuesta() {
         }
     }
     
+    function volver(){
+        setEncuestas(false)
+        setLlamadaSeleccionada(false)
+        gestor.llamadaSeleccionada = null
+    }
     return (
         <div>
             <header className="p-5">
@@ -279,14 +296,14 @@ function PantallaConsultarEncuesta() {
             </header>
             {!ventana && Inicio()}
             
-            {ventana && <div className="container p-2 py-4 mx-auto main-container">
+            {ventana && <div className="container p-2 py-4 mx-auto main-container w-50">
             
                 {!periodo && NuevaConsulta()}
 
                 {periodo &&  <div>
                     {pedirPeriodoFecha()}
 
-                    {encuestas && guardarLlamadas() && <div className="mx-auto">
+                    {encuestas && guardarLlamadas() &&  <div className="mx-auto">
                         {!llamadaSeleccionada && mostrarLlamadasConEncuesta()}
                         {llamadaSeleccionada && mostrarDatosLlamadaSeleccionada()}
                     </div>
@@ -295,7 +312,7 @@ function PantallaConsultarEncuesta() {
                     }
             </div>
             }
-            {ventana && BotonCancelar()}
+            {ventana && navegacion()}
         </div>
     );
 }

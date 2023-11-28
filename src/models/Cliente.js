@@ -10,9 +10,6 @@ class Cliente{
     }
 }
 
-//inicializo un array para cargar clientes
-const array_clientes = [];
-
 //creo una función para crear clientes
 export function crearCliente() {
     //defino una lista de nombres para crear los clientes

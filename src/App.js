@@ -4,9 +4,7 @@ import PantallaConsultarEncuesta from './Components/PantallaConsultarEncuesta.js
 
 function App() {
   return (
-        <>
         <PantallaConsultarEncuesta />
-        </>
      
   );
 }

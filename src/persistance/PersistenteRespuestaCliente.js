@@ -29,11 +29,4 @@ export function recuperarRespuestaCliente() {
     });
 }
 
-async function main() {
-    respuestaCliente = await recuperarRespuestaCliente();
-    console.log(respuestaCliente);
-}
-
-// main();
-
 export default respuestaCliente;

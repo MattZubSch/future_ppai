@@ -61,13 +61,14 @@ export class Encuesta extends IAgregado{
     }
     esRespuestaPosible(respuesta){
         let rtaPosible = false;
-        let pregEncuesta = this.preguntas
-                    .filter(pregunta => pregunta !== null)
-        let encuestaCorrecta = Pregunta.esRespuestaPosible(pregEncuesta, respuesta)
-            if (encuestaCorrecta){
-                rtaPosible = true;
+        this.preguntas.forEach(pregunta => {
+            if (pregunta !== null){
+                let respuestasPosibles = pregunta.getRtaPosibles()
+                if (respuestasPosibles.indexOf(respuesta) !== -1){
+                    rtaPosible = {pregunta: pregunta, respuesta: respuesta}
+                }
             }
-        console.log("retorna rta posible")
+        })
         return rtaPosible
     }
 }

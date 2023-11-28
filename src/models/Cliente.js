@@ -1,5 +1,6 @@
 class Cliente{
-    constructor(dni, nombreCompleto, nroCelular){
+    constructor(id, dni, nombreCompleto, nroCelular){
+        this.id = id;
         this.dni = dni;
         this.nombreCompleto = nombreCompleto;
         this.nroCelular = nroCelular;
@@ -8,9 +9,6 @@ class Cliente{
         return this.nombreCompleto;
     }
 }
-
-//inicializo un array para cargar clientes
-const array_clientes = [];
 
 //creo una función para crear clientes
 export function crearCliente() {
@@ -35,4 +33,4 @@ export function crearCliente() {
 }
 
 // Exporto las clases y los objetos para poder usarlos en otros archivos
-export default array_clientes;
+export default Cliente;

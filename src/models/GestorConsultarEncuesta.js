@@ -1,5 +1,6 @@
-import array_llamadas from "./Llamada.js";
-import array_encuestas from "./Encuesta.js";
+import { IteradorLlamada } from "../patterns/iterator/IteradorLlamada.ts";
+import { IAgregado } from "../patterns/iterator/IAgregado.js";
+import { Encuesta } from "./Encuesta.js";
 
 class GestorConsultarEncuesta extends IAgregado{
     constructor(fecha, fechaInicio, fechaFin, csv, llamadaSeleccionada){
@@ -18,20 +19,34 @@ class GestorConsultarEncuesta extends IAgregado{
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
-    crearIterador(array_llamadas) {
-        return new IteradorConcreto(array_llamadas);
+    crearIterador(arrayLlamadas) {
+        console.log(arrayLlamadas)
+        return new IteradorLlamada(arrayLlamadas);
     }
-    buscarLlamadasConEncuestas(){
+    buscarLlamadasConEncuestas(arrayLlamadas){
         this.llamadasEncuesta = [];
-        array_llamadas.forEach(llamada => {
-            if (llamada.esDePeriodo(this.fechaInicio, this.fechaFin)){
-                if (llamada.esFinalizada()) {
-                    if (llamada.esEncuestaRespondida()){
-                    this.llamadasEncuesta.push(llamada);
-                }
-                }
+        console.log("1- Se Inicia la busqueda de llamadas con encuestas")
+        this.iterador = this.crearIterador(arrayLlamadas);
+        console.log("2- Se crea el iterador de Llamadas")
+        this.iterador.primero();
+        console.log("3- Se posiciona el iterador en el primer elemento")
+        while (!this.iterador.haTerminado()) {
+            console.log("4- Ingresamos al ciclo while")
+            const llamadaActual = this.iterador.actual();
+            console.log("5 - verificamos el objeto actual del iterador")
+            console.log(llamadaActual)
+            if (this.iterador.cumpleFiltro({
+                esDePeriodo: { fechaInicioOrig: this.fechaInicio, fechaFinOrig: this.fechaFin },
+                esFinalizada: { esFinalizada: "esFinalizada" },
+                esEncuestaRespondida: { esEncuestaRespondida: "esEncuestaRespondida" }
+              })) {
+                this.llamadasEncuesta.push(llamadaActual);
+                console.log(llamadaActual);
             }
-        })
+          
+            this.iterador.siguiente();
+          }
+
         return this.llamadasEncuesta;
     }
     getFechaActual(){
@@ -50,11 +65,11 @@ class GestorConsultarEncuesta extends IAgregado{
     tomarSeleccionLlamada(llamadaSeleccionada){
         this.llamadaSeleccionada = llamadaSeleccionada;
     }
-    obtenerDatosLlamadaSeleccionada(){
+    obtenerDatosLlamadaSeleccionada(arrayEncuestas){
         //buscar array con respuestas de cliente
         let respuestasCliente = this.llamadaSeleccionada.mostrarRespuestasCliente();
         //defino el objeto que devolvera toda la informacion de la llamada seleccionada
-        let datosLlamadaSelec = this.buscarEncuesta(respuestasCliente)
+        let datosLlamadaSelec = Encuesta.buscarEncuesta(arrayEncuestas, respuestasCliente)
         if (datosLlamadaSelec !== false){
             let llamada = this.llamadaSeleccionada.mostrarDatos();
             datosLlamadaSelec = { ...datosLlamadaSelec, datosLlamada: llamada}
@@ -62,35 +77,35 @@ class GestorConsultarEncuesta extends IAgregado{
 
     return datosLlamadaSelec
     }
-    buscarEncuesta(arrayRtas){
-        //defino array que guarde las preguntas filtradas
-        let retorno = false;
-        let preguntas = [];
-        //busco por cada encuesta sus preguntas asociadas
-        //aqui inicio el segundo loop
-        array_encuestas.forEach(encuesta => {
-            for (let i = 0; i < arrayRtas.length; i++) {
-                let rtaCliente = encuesta.esRespuestaPosible(arrayRtas[i])
-                if (rtaCliente !== false){
-                    preguntas.push(rtaCliente.pregunta)
-                } else {
-                    preguntas = [];
-                    break;
-                }
-            }
-            if (preguntas.length === arrayRtas.length){
-                //si se encontro la encuesta, guardarla en una variable
-                let descEncuesta = encuesta.getDescripcionEncuesta();
-                let descPreguntas = preguntas.map(pregunta => pregunta.getDescripcion())
-                //defino el objeto que contendra los datos de la llamada, la encuesta, las preguntas y las respuestas
-                retorno = {encuesta: descEncuesta, preguntas: descPreguntas, respuestaCliente: arrayRtas, datosLlamada: null}
-            }
-        })
-        return retorno
-    }
-    tomarFormaVisualizacion(){
+    // buscarEncuesta(arrayEncuestas, arrayRtas){
+    //     //defino array que guarde las preguntas filtradas
+    //     let retorno = false;
+    //     let preguntas = [];
+    //     //busco por cada encuesta sus preguntas asociadas
+    //     //aqui inicio el segundo loop
+    //     arrayEncuestas.forEach(encuesta => {
+    //         for (let i = 0; i < arrayRtas.length; i++) {
+    //             let rtaCliente = encuesta.esRespuestaPosible(arrayRtas[i])
+    //             if (rtaCliente !== false){
+    //                 preguntas.push(rtaCliente.pregunta)
+    //             } else {
+    //                 preguntas = [];
+    //                 break;
+    //             }
+    //         }
+    //         if (preguntas.length === arrayRtas.length){
+    //             //si se encontro la encuesta, guardarla en una variable
+    //             let descEncuesta = encuesta.getDescripcionEncuesta();
+    //             let descPreguntas = preguntas.map(pregunta => pregunta.getDescripcion())
+    //             //defino el objeto que contendra los datos de la llamada, la encuesta, las preguntas y las respuestas
+    //             retorno = {encuesta: descEncuesta, preguntas: descPreguntas, respuestaCliente: arrayRtas, datosLlamada: null}
+    //         }
+    //     })
+    //     return retorno
+    // }
+    tomarFormaVisualizacion(arrayEncuestas){
         const table = document.createElement('table');
-        let datos = this.obtenerDatosLlamadaSeleccionada()
+        let datos = this.obtenerDatosLlamadaSeleccionada(arrayEncuestas)
         table.innerHTML = `
             <tr>
               <td>Cliente</td>

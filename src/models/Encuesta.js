@@ -1,10 +1,14 @@
-import array_preguntas from "./Pregunta.js";
+import { IteradorEncuestas } from "../patterns/iterator/IteradorEncuestas.ts";
+import { IAgregado } from "../patterns/iterator/IAgregado.js";
+import { Pregunta } from "./Pregunta.js";
 
-class Encuesta{
-    constructor(descripcion, fechaFinVigencia) {
+export class Encuesta extends IAgregado{
+    constructor(id, descripcion, fechaFinVigencia, preguntas) {
+        super();
+        this.id = id;
         this.descripcion = descripcion;
         this.fechaFinVigencia = fechaFinVigencia;
-        this.preguntas = [];
+        this.preguntas = preguntas;
     }
     getDescripcionEncuesta(){
         return this.descripcion;
@@ -12,38 +16,58 @@ class Encuesta{
     getPreguntas(){
         return this.preguntas;
     }
+    static crearIterador(arrayLlamadas) {
+        console.log(arrayLlamadas)
+        return new IteradorEncuestas(arrayLlamadas);
+    }
+    static buscarEncuesta(encuestas, respuestas){
+        //defino array que guarde las preguntas filtradas
+        let retorno = false;
+        let preguntas = [];
+        console.log("contenido de respuestas")
+        console.log(respuestas)
+        //creo el iterador de encuestas
+        const iterador = Encuesta.crearIterador(encuestas);
+        //posiciono el iterador en el primer elemento
+        iterador.primero();
+        //mientras el iterador no haya terminado
+        while (!iterador.haTerminado()) {
+            //guardo la encuesta actual
+            let encuestaActual = iterador.actual();
+            //verifico si la encuesta actual contiene las respuestas seleccionadas
+            if (iterador.cumpleFiltro({
+                respuestas: respuestas
+            })) {
+                //si la encuesta actual contiene las respuestas seleccionadas, guardo la encuesta actual
+                retorno = encuestaActual;
+                //guardo las preguntas de la encuesta actual
+                preguntas = encuestaActual.getPreguntas();
+                //cargo la descripcion de la encuesta actual
+                let descEncuesta = encuestaActual.getDescripcionEncuesta();
+                console.log("entra hasta aca?")
+                console.log(preguntas)
+                let descPreguntas = preguntas
+                    .filter(pregunta => pregunta !== null) // Filtrar elementos nulos
+                    .map(pregunta => pregunta.getDescripcion());
+                retorno = {encuesta: descEncuesta, preguntas: descPreguntas, respuestaCliente: respuestas, datosLlamada: null}
+                break;
+            }
+            //si la encuesta actual no contiene las respuestas seleccionadas, avanzo al siguiente elemento
+            iterador.siguiente();
+            }
+
+        //retorno la encuesta actual
+        return retorno;
+    }
     esRespuestaPosible(respuesta){
         let rtaPosible = false;
-        this.preguntas.forEach(pregunta => {
-            let respuestasPosibles = pregunta.getRtaPosibles()
-            if (respuestasPosibles.indexOf(respuesta) !== -1){
-                rtaPosible = {pregunta: pregunta, respuesta: respuesta}
+        let pregEncuesta = this.preguntas
+                    .filter(pregunta => pregunta !== null)
+        let encuestaCorrecta = Pregunta.esRespuestaPosible(pregEncuesta, respuesta)
+            if (encuestaCorrecta){
+                rtaPosible = true;
             }
-        })
+        console.log("retorna rta posible")
         return rtaPosible
     }
 }
-//Inicializo el array que guardara las encuestas creadas
-const array_encuestas = [];
-
-
-export function crearEncuesta(fechaFinVigencia){
-    //Creo un array con los distintos tipos de Descripciones
-    const descEncuestas = ["Encuesta de satisfacción", "Encuesta de calidad del servicio", "Encuesta de atención del operario"];
-    //Creo el objeto Encuesta con los parametros iniciales
-    let encuesta = new Encuesta(descEncuestas[Math.floor(Math.random() * descEncuestas.length)], fechaFinVigencia);
-    //Creo un numero aleatorio de preguntas entre 2 y 3
-    let cantPreguntas = Math.ceil(Math.random() * 2 + 1);
-    //Segun la cantidad de preguntas, recorro un ciclo for para elegirlas aleatoriamente
-    for (let j = 0; j < cantPreguntas; j++) {
-        //Selecciono una pregunta y la agrego al objeto Encuesta
-        let pregunta = array_preguntas[Math.floor(Math.random() * array_preguntas.length)];
-        encuesta.preguntas.push(pregunta);
-    }
-    //Agrego el objeto Encuesta al array de encuestas
-    array_encuestas.push(encuesta);
-    return encuesta;
-}
-
-// Exporto las clases y los objetos para poder usarlos en otros archivos
-export default array_encuestas 

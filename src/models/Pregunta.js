@@ -1,19 +1,48 @@
 import array_paq_rtaPos from "./RespuestaPosible.js";
+import { IAgregado } from "../patterns/iterator/IAgregado.js";
+import { IteradorPreguntas } from "../patterns/iterator/IteradorPreguntas.ts";
 
-class Pregunta{
-    constructor(pregunta, rtaPosibles){
+export class Pregunta extends IAgregado{
+    constructor(id, pregunta){
+        super();
+        this.id = id;
         this.pregunta = pregunta;
-        this.rtaPosibles = rtaPosibles;
+        this.rtaPosibles = [];
     }
     getDescripcion(){
         return this.pregunta;
     }
+    static crearIterador(preguntas) {
+        return new IteradorPreguntas(preguntas);
+    }
     getRtaPosibles(){
         let rtaPosibles = [];
+
         this.rtaPosibles.forEach(rtaPosible => {
             rtaPosibles.push(rtaPosible.getDescripcionRta());
         })
         return rtaPosibles;
+    }
+    static esRespuestaPosible(preguntas, respuesta){
+        let rtaPosible = true;
+        const iterador = Pregunta.crearIterador(preguntas);
+        //posiciono el iterador en el primer elemento
+        iterador.primero();
+        //mientras el iterador no haya terminado
+        while (!iterador.haTerminado()) {
+            //guardo la encuesta actual
+            let preguntaActual = iterador.actual();
+            //verifico si la encuesta actual contiene las respuestas seleccionadas
+            if (!iterador.cumpleFiltro({
+                respuestas: respuesta
+            })) {
+                //seteo la varaible a false y paso a la siguiente pregunta
+                rtaPosible = false;
+                return rtaPosible;
+            }
+            iterador.siguiente();
+        }
+        return rtaPosible;
     }
 }
 
@@ -56,5 +85,5 @@ const pregunta_14 = new Pregunta("¿Recomendaría este servicio de atención al 
 //array de preguntas
 const array_preguntas = [pregunta_1, pregunta_2, pregunta_3, pregunta_4, pregunta_5, pregunta_6, pregunta_7, pregunta_8, pregunta_9, pregunta_10, pregunta_11, pregunta_12, pregunta_13, pregunta_14];
 
-export default array_preguntas;
+
 

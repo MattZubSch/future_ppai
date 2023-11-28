@@ -1,7 +1,9 @@
-class RespuestaPosible{
-    constructor(descripcion, valor) {
+export class RespuestaPosible{
+    constructor(id, descripcion, valor, idPregunta) {
+        this.id = id;
         this.descripcion = descripcion;
         this.valor = valor;
+        this.idPregunta = idPregunta;
     }
     getDescripcionRta(){
         return this.descripcion;

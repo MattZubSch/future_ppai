@@ -16,6 +16,11 @@ let array_respuestasCliente = [];
 //Funcion que respondera a las preguntas de todas las encuestas
 export function responderEncuestas(fechaFinVigencia, fechaFinLlamada){
     let encuestaResponder = crearEncuesta(fechaFinVigencia);
+    console.log("=====================================");
+    console.log("Encuesta (mirar abajo)")
+    console.log(encuestaResponder);
+    console.log("Preguntas de la encuesta: ");
+    console.log(encuestaResponder.preguntas);
     //inicio el array que contendra las respuestas de cada encuesta (array de respuestas totales)
     let respuestaCliente = [];
     //Inicializo un array que contendra las respuestas de cada encuesta (array de respuestas parciales)

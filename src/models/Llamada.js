@@ -152,8 +152,16 @@ function generarLlamada() {
     array_llamadas.push(llamada);
 }
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 1; i++) {
     generarLlamada();
 }
+
+console.log("=====================================");
+console.log("Llamadas: ")
+console.log(array_llamadas[0])
+console.log("Cambios Estado: ")
+console.log(array_llamadas[0].cambioEstado)
+console.log("Respuestas Cliente: ")
+console.log(array_llamadas[0].respuestaCliente)
 
 export default array_llamadas;
